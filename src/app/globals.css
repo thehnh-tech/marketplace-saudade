@@ -1,0 +1,138 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at 18% 0%, rgba(215, 25, 32, 0.06), transparent 28rem),
+    radial-gradient(circle at 92% 100%, rgba(215, 25, 32, 0.05), transparent 26rem),
+    #f4f1ec;
+  color: #0a0908;
+  font-family: var(--font-body), Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: #d71920;
+  color: #f4f1ec;
+}
+
+.paper-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  opacity: 0.08;
+  mix-blend-mode: multiply;
+  background-image:
+    linear-gradient(0deg, rgba(10, 9, 8, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10, 9, 8, 0.04) 1px, transparent 1px);
+  background-size: 3px 3px;
+}
+
+.wordmark {
+  font-family: var(--font-serif), Georgia, serif;
+  font-weight: 800;
+  letter-spacing: -0.07em;
+}
+
+.soft-title {
+  letter-spacing: -0.055em;
+}
+
+.hairline {
+  border-color: rgba(215, 25, 32, 0.35);
+}
+
+.corner-frame {
+  position: relative;
+}
+
+.corner-frame::before,
+.corner-frame::after {
+  content: "";
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  pointer-events: none;
+}
+
+.corner-frame::before {
+  top: 12px;
+  left: 12px;
+  border-top: 1px solid #d71920;
+  border-left: 1px solid #d71920;
+  box-shadow: 0 0 14px rgba(215, 25, 32, 0.45);
+}
+
+.corner-frame::after {
+  right: 12px;
+  bottom: 12px;
+  border-right: 1px solid #d71920;
+  border-bottom: 1px solid #d71920;
+  box-shadow: 0 0 14px rgba(215, 25, 32, 0.45);
+}
+
+.scan-line {
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(215, 25, 32, 0.18),
+    rgba(255, 60, 70, 0.95),
+    rgba(215, 25, 32, 0.85),
+    rgba(215, 25, 32, 0.18),
+    transparent
+  );
+}
+
+.text-glow-red {
+  text-shadow: 0 0 14px rgba(215, 25, 32, 0.55);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee,
+  .animate-scan,
+  .animate-pulseGlow {
+    animation: none !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
