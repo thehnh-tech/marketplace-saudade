@@ -77,7 +77,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
   if (!product) notFound();
 
   const available = product.status === "available";
-  const detailImages = product.images.slice(1, 5);
 
   return (
     <main>
@@ -112,27 +111,16 @@ export default async function ProductPage({ params }: ProductPageProps) {
               className="object-cover"
               priority
             />
-            <span className={
-              available
-                ? "absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-paper/90 px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-red"
-                : "absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-ink/80 px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-red"
-            }>
+            <span
+              className={
+                available
+                  ? "absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-paper/90 px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-red"
+                  : "absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-ink/80 px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-red"
+              }
+            >
               <span className={available ? "h-1.5 w-1.5 rounded-full bg-signal animate-pulseGlow" : "h-1.5 w-1.5 rounded-full bg-red/70"} />
               {available ? "Drop 0024 — Live" : "Preview"}
             </span>
-          </div>
-          <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
-            {detailImages.map((image) => (
-              <div key={image.label} className="relative aspect-square overflow-hidden rounded-[20px] border border-red/15 bg-bone sm:rounded-[24px]">
-                <Image
-                  src={image.src}
-                  alt={`${product.shortTitle} — ${image.label}`}
-                  fill
-                  sizes="(min-width: 640px) 12vw, 45vw"
-                  className="object-contain p-4 sm:p-5"
-                />
-              </div>
-            ))}
           </div>
         </div>
 
@@ -187,7 +175,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
         </div>
         <div className="bg-ink p-6 text-paper sm:p-10 lg:p-16">
           <p className="font-mono text-xs font-bold uppercase tracking-[0.28em] text-red">The QR</p>
-          <h2 className="soft-title mt-6 font-display text-4xl font-semibold uppercase leading-[0.96] sm:text-5xl">It is part of the fit.</h2>
+          <h2 className="soft-title mt-6 font-display text-4xl font-semibold uppercase leading-[0.96] sm:text-5xl">
+            It is part of the fit.
+          </h2>
           <p className="mt-6 max-w-md leading-8 text-paper/65">
             The code is not a gimmick. It opens a private photo flow tied to the garment. Someone scans, captures the moment, and you keep it.
           </p>

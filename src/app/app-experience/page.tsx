@@ -6,9 +6,9 @@ import { appSteps } from "@/data/products";
 import { absoluteUrl, breadcrumbLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Night Access App — Scan, capture, archive",
+  title: "Night Access App - Scan, capture, archive",
   description:
-    "How the SAUDADE Night Access app works. Scan the QR on the tee, take a live photo, and the moment lands in the owner's private feed. The garment becomes proof that the night happened.",
+    "How the SAUDADE Night Access app works. Scan the QR on the tee, capture a rear shot and a front shot, then the pair lands in the owner's private feed.",
   keywords: [
     "night access app",
     "QR scan to camera",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "article",
     title: "SAUDADE Night Access App",
-    description: "Scan the tee, send a photo, keep the night.",
+    description: "Scan the tee, send a paired capture, keep the night.",
     url: absoluteUrl("/app-experience")
   }
 };
@@ -34,9 +34,9 @@ const howToLd = {
   tool: [{ "@type": "HowToTool", name: "SAUDADE Night Access tee" }, { "@type": "HowToTool", name: "Smartphone camera" }],
   step: [
     { "@type": "HowToStep", position: 1, name: "Scan the code", text: "Someone scans the QR printed on the tee with their phone camera." },
-    { "@type": "HowToStep", position: 2, name: "Camera opens", text: "The Night Access camera page opens immediately. No gallery, no old photos, just the live moment." },
-    { "@type": "HowToStep", position: 3, name: "Send the memory", text: "They take the photo and send it straight through the garment." },
-    { "@type": "HowToStep", position: 4, name: "Keep the archive", text: "The owner receives the photo in their private SAUDADE feed." }
+    { "@type": "HowToStep", position: 2, name: "Camera opens", text: "The Night Access camera page opens immediately. It captures a rear frame, then flips to the front frame." },
+    { "@type": "HowToStep", position: 3, name: "Send the pair", text: "They review the two shots and send them together." },
+    { "@type": "HowToStep", position: 4, name: "Keep the archive", text: "The owner receives the paired capture in their private SAUDADE feed." }
   ]
 } as const;
 
@@ -56,8 +56,8 @@ export default function AppExperiencePage() {
           <SectionHeader
             dark
             eyebrow="Night Access"
-            title="Scan it. Shoot it. Keep it."
-            copy="SAUDADE turns a tee into a private memory drop. The QR opens the camera. The photo lands in the owner feed."
+            title="Scan it. Shoot it. Keep both frames."
+            copy="SAUDADE turns a tee into a private memory drop. The QR opens the camera. Rear and front shots land in the owner feed as one pair."
           />
           <div className="mt-12 grid gap-10 lg:grid-cols-2 lg:items-start lg:gap-14">
             <div className="grid gap-6 sm:grid-cols-2">

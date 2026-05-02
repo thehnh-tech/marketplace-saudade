@@ -12,7 +12,7 @@ export function Logo({ light = false }: { light?: boolean }) {
         className="h-9 w-9 rounded-md border border-red/20 shadow-red sm:h-10 sm:w-10"
         priority
       />
-      <span className={light ? "wordmark text-2xl uppercase text-paper sm:text-3xl" : "wordmark text-2xl uppercase text-red sm:text-3xl"}>
+      <span className={light ? "font-display text-2xl font-semibold uppercase tracking-normal text-paper sm:text-3xl" : "font-display text-2xl font-semibold uppercase tracking-normal text-red sm:text-3xl"}>
         Saudade
       </span>
     </Link>

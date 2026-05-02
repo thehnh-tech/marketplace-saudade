@@ -136,17 +136,17 @@ export const appSteps = [
   },
   {
     title: "Camera opens",
-    copy: "No gallery. No old photos. Just the moment.",
+    copy: "No gallery. No old photos. Just the rear shot, then the front shot.",
     meta: "02"
   },
   {
-    title: "Send the memory",
-    copy: "They take the photo and send it through the garment.",
+    title: "Send the pair",
+    copy: "They review both shots and send them together.",
     meta: "03"
   },
   {
     title: "Keep the archive",
-    copy: "You receive it in your private SAUDADE feed.",
+    copy: "You receive the pair in your private SAUDADE feed.",
     meta: "04"
   }
 ];

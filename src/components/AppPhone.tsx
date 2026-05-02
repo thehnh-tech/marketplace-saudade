@@ -6,9 +6,9 @@ type AppPhoneProps = {
 };
 
 const feedItems = [
-  { time: "03:24", place: "Backstage", tone: "from-red/70 via-red/30 to-paper/10" },
-  { time: "02:11", place: "Red Room", tone: "from-red/55 via-ink/40 to-paper/10" },
-  { time: "01:48", place: "After Club", tone: "from-ink/60 via-red/40 to-paper/10" }
+  { time: "03:24", place: "Backstage", front: "/assets/bgfront.png", back: "/assets/bgback.png" },
+  { time: "02:11", place: "Red Room", front: "/assets/front.png", back: "/assets/back.png" },
+  { time: "01:48", place: "After Club", front: "/assets/bginner.png", back: "/assets/bgouter.png" }
 ];
 
 export function AppPhone({ title = "Night Access", mode = "capture" }: AppPhoneProps) {
@@ -26,7 +26,7 @@ export function AppPhone({ title = "Night Access", mode = "capture" }: AppPhoneP
         </div>
         <p className="font-display text-lg font-semibold uppercase tracking-normal sm:text-xl">{title}</p>
         <p className="mt-0.5 font-mono text-[8px] font-bold uppercase tracking-[0.28em] text-paper/45">
-          {mode === "capture" ? "Live capture" : "Private archive"}
+          {mode === "capture" ? "BeReal capture" : "Private archive"}
         </p>
 
         {mode === "capture" ? <CaptureBody /> : <FeedBody />}
@@ -45,27 +45,34 @@ export function AppPhone({ title = "Night Access", mode = "capture" }: AppPhoneP
 
 function CaptureBody() {
   return (
-    <div className="mt-3 flex flex-1 flex-col">
-      <div className="relative flex-1 overflow-hidden rounded-[20px] border border-red/35 bg-paper text-red">
-        <div className="absolute inset-0 grid place-items-center">
-          <Image src="/assets/bgfront.png" alt="Scan preview" width={190} height={250} className="w-[58%] opacity-95" priority />
+    <div className="mt-3 flex flex-1 flex-col gap-2.5">
+      <div className="grid flex-1 grid-cols-2 gap-2">
+        <div className="relative aspect-[3/4] overflow-hidden rounded-[20px] border border-red/35 bg-paper text-red">
+          <Image src="/assets/bgback.png" alt="Rear preview" fill className="object-cover" priority />
+          <div className="absolute left-2 top-2 rounded-full bg-ink/85 px-2 py-1 font-mono text-[8px] font-bold uppercase tracking-[0.22em] text-paper">
+            Rear
+          </div>
+          <div className="scan-line absolute inset-x-0 top-0 h-12 animate-scan" />
         </div>
-        <div className="scan-line absolute inset-x-0 top-0 h-12 animate-scan" />
-        <span className="absolute left-2 top-2 inline-flex items-center gap-1 font-mono text-[8px] font-bold uppercase tracking-[0.22em] text-red">
-          <span className="h-1 w-1 rounded-full bg-signal animate-pulseGlow" />
-          Scan
-        </span>
-        <span className="absolute right-2 top-2 font-mono text-[8px] font-bold uppercase tracking-[0.22em] text-red/80">100%</span>
-        <div className="absolute inset-x-2 bottom-2 flex items-center justify-between rounded-full bg-ink/85 px-2 py-1 font-mono text-[7px] font-bold uppercase tracking-[0.24em] text-paper">
-          <span>QR locked</span>
-          <span className="text-signal">●</span>
+        <div className="relative aspect-[3/4] overflow-hidden rounded-[20px] border border-red/35 bg-paper text-red">
+          <Image src="/assets/bgfront.png" alt="Front preview" fill className="object-cover" priority />
+          <div className="absolute left-2 top-2 rounded-full bg-ink/85 px-2 py-1 font-mono text-[8px] font-bold uppercase tracking-[0.22em] text-paper">
+            Front
+          </div>
+          <div className="scan-line absolute inset-x-0 top-0 h-12 animate-scan" />
         </div>
+      </div>
+      <div className="rounded-[18px] border border-paper/10 bg-paper/5 p-2.5">
+        <p className="font-display text-xs font-semibold uppercase tracking-normal">Auto pair</p>
+        <p className="mt-1 font-mono text-[8px] font-bold uppercase tracking-[0.22em] text-paper/55">
+          One shot each side, then review together.
+        </p>
       </div>
       <button
         type="button"
-        className="mt-2.5 w-full rounded-full bg-red py-2.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-paper transition hover:bg-signal"
+        className="w-full rounded-full bg-red py-2.5 text-[10px] font-semibold uppercase tracking-[0.2em] text-paper transition hover:bg-signal"
       >
-        Capture moment
+        Capture pair
       </button>
     </div>
   );
@@ -75,18 +82,19 @@ function FeedBody() {
   return (
     <div className="mt-3 flex flex-1 flex-col gap-1.5 overflow-hidden">
       {feedItems.map((item) => (
-        <div
-          key={item.time}
-          className="flex flex-1 items-stretch gap-2 rounded-2xl border border-paper/10 bg-paper/5 p-1.5"
-        >
-          <div className={`aspect-square w-12 shrink-0 rounded-xl bg-gradient-to-br ${item.tone}`} />
-          <div className="flex flex-1 flex-col justify-center">
-            <p className="font-display text-xs font-semibold uppercase tracking-normal">{item.place}</p>
-            <p className="mt-0.5 font-mono text-[8px] font-bold uppercase tracking-[0.22em] text-paper/55">
-              {item.time} · received
-            </p>
+        <div key={item.time} className="rounded-2xl border border-paper/10 bg-paper/5 p-1.5">
+          <div className="flex items-center justify-between px-1 pb-1 font-mono text-[8px] font-bold uppercase tracking-[0.22em] text-paper/45">
+            <span>{item.place}</span>
+            <span>{item.time}</span>
           </div>
-          <span className="self-center text-signal">●</span>
+          <div className="grid grid-cols-2 gap-1.5">
+            <div className="relative aspect-[3/4] overflow-hidden rounded-[14px]">
+              <Image src={item.back} alt={`${item.place} rear`} fill className="object-cover" />
+            </div>
+            <div className="relative aspect-[3/4] overflow-hidden rounded-[14px]">
+              <Image src={item.front} alt={`${item.place} front`} fill className="object-cover" />
+            </div>
+          </div>
         </div>
       ))}
     </div>

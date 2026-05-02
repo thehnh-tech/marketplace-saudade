@@ -20,18 +20,18 @@ export function Footer() {
             <span>Shipped worldwide</span>
           </div>
         </div>
-        <div className="font-mono text-[11px] font-bold uppercase tracking-[0.26em]">
-          <p className="mb-5 text-red">Navigation</p>
-          <div className="grid gap-3">
+        <div>
+          <p className="mb-5 font-display text-sm font-semibold uppercase tracking-normal text-red">Navigation</p>
+          <div className="grid gap-3 text-sm font-medium text-ink/70">
             <Link href="/shop" className="transition hover:text-red">Shop</Link>
             <Link href="/concept" className="transition hover:text-red">Concept</Link>
             <Link href="/app-experience" className="transition hover:text-red">Night Access</Link>
             <Link href="/cart" className="transition hover:text-red">Cart</Link>
           </div>
         </div>
-        <div className="font-mono text-[11px] font-bold uppercase tracking-[0.26em]">
-          <p className="mb-5 text-red">Legal</p>
-          <div className="grid gap-3">
+        <div>
+          <p className="mb-5 font-display text-sm font-semibold uppercase tracking-normal text-red">Legal</p>
+          <div className="grid gap-3 text-sm font-medium text-ink/70">
             <Link href="/terms" className="transition hover:text-red">Terms of Service</Link>
             <Link href="/privacy" className="transition hover:text-red">Privacy & Use</Link>
             <Link href="/purchase" className="transition hover:text-red">Purchase Conditions</Link>
@@ -39,7 +39,7 @@ export function Footer() {
           </div>
         </div>
         <div>
-          <p className="font-mono text-[11px] font-bold uppercase tracking-[0.26em] text-red">Private list</p>
+          <p className="font-display text-sm font-semibold uppercase tracking-normal text-red">Private list</p>
           <form className="mt-5 flex border border-red/35 bg-bone focus-within:border-red">
             <input
               className="min-w-0 flex-1 bg-transparent px-4 py-4 text-sm outline-none placeholder:text-ink/40"
