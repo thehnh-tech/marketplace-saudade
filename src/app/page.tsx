@@ -105,25 +105,40 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="grid border-y border-red/20 lg:grid-cols-[0.85fr_1.15fr]">
-        <div className="p-6 sm:p-12 lg:p-16">
-          <p className="font-mono text-xs font-bold uppercase tracking-[0.28em] text-red">The point</p>
-          <h2 className="soft-title mt-6 font-display text-4xl font-semibold uppercase leading-[0.96] sm:text-6xl lg:text-7xl">
-            Wear it. Let people scan it.
-          </h2>
-          <p className="mt-7 max-w-sm text-base leading-8 text-ink/65 sm:text-lg">
-            The QR is part of the design. In real life, it opens a private capture page linked to your piece.
-          </p>
-          <Link
-            href="/concept"
-            className="mt-10 inline-flex rounded-full border border-red/25 px-6 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-red transition hover:border-red hover:bg-red hover:text-paper"
-          >
-            Read the story
-          </Link>
-        </div>
-        <div className="relative min-h-[360px] overflow-hidden bg-bone sm:min-h-[480px] lg:min-h-[520px]">
-          <Image src="/assets/back.png" alt="SAUDADE back print" fill sizes="(min-width: 1024px) 60vw, 100vw" className="object-contain p-6 sm:p-12" />
-          <span className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-red to-transparent" />
+      <section className="border-y border-red/20 px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+        <div className="mx-auto grid max-w-[1500px] gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
+          <div>
+            <p className="font-mono text-xs font-bold uppercase tracking-[0.28em] text-red">The point</p>
+            <h2 className="soft-title mt-6 font-display text-4xl font-semibold uppercase leading-[0.96] sm:text-6xl lg:text-7xl">
+              Wear it. Let people scan it.
+            </h2>
+            <p className="mt-7 max-w-md text-base leading-8 text-ink/65 sm:text-lg">
+              The QR is part of the design. In real life, it opens a private capture page linked to your piece.
+            </p>
+            <Link
+              href="/concept"
+              className="mt-10 inline-flex rounded-full border border-red/25 px-6 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-red transition hover:border-red hover:bg-red hover:text-paper"
+            >
+              Read the story
+            </Link>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-3">
+            {[
+              { meta: "01", title: "Heavyweight cotton", copy: "260 GSM oversized boxy fit. Built to live in late and stay sharp." },
+              { meta: "02", title: "QR sewn into the design", copy: "A working code printed in red. Scan opens the private camera page." },
+              { meta: "03", title: "Worldwide", copy: "Shipped from Switzerland. Stripe checkout. 14-day return on unworn pieces." }
+            ].map((item) => (
+              <div
+                key={item.meta}
+                className="group relative overflow-hidden rounded-[26px] border border-red/20 bg-bone p-6 transition hover:border-red/55 sm:p-7"
+              >
+                <span className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-red to-transparent opacity-0 transition group-hover:opacity-100" />
+                <p className="font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-red">{item.meta}</p>
+                <p className="mt-4 font-display text-lg font-semibold uppercase tracking-[-0.02em] sm:text-xl">{item.title}</p>
+                <p className="mt-3 text-sm leading-7 text-ink/65">{item.copy}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
