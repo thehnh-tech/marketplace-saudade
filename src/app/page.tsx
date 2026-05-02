@@ -37,8 +37,7 @@ export default async function HomePage() {
       <JsonLd id="ld-home-itemlist" data={itemListLd(products)} />
       <JsonLd id="ld-home-breadcrumb" data={breadcrumbLd([{ name: "Home", url: "/" }])} />
       <section className="relative overflow-hidden border-b border-red/20 px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
-        <span className="pointer-events-none absolute -left-32 top-1/2 h-72 w-72 -translate-y-1/2 rounded-full bg-red/15 blur-3xl" />
-        <span className="pointer-events-none absolute -right-24 -top-20 h-72 w-72 rounded-full bg-signal/20 blur-3xl" />
+        <span className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-red/45 to-transparent" />
         <div className="relative mx-auto grid max-w-[1500px] gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
           <div className="py-4 sm:py-8 lg:py-20">
             <p className="font-mono text-xs font-bold uppercase tracking-[0.28em] text-red">
@@ -134,7 +133,7 @@ export default async function HomePage() {
               >
                 <span className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-red to-transparent opacity-0 transition group-hover:opacity-100" />
                 <p className="font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-red">{item.meta}</p>
-                <p className="mt-4 font-display text-lg font-semibold uppercase tracking-[-0.02em] sm:text-xl">{item.title}</p>
+                <p className="mt-4 font-display text-lg font-semibold uppercase tracking-normal sm:text-xl">{item.title}</p>
                 <p className="mt-3 text-sm leading-7 text-ink/65">{item.copy}</p>
               </div>
             ))}
@@ -159,7 +158,7 @@ export default async function HomePage() {
                   className="rounded-[24px] border border-paper/10 bg-paper/[0.04] p-5 transition hover:border-red/45"
                 >
                   <p className="font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-red">{step.meta}</p>
-                  <h3 className="mt-3 font-display text-xl font-semibold uppercase tracking-[-0.03em] sm:text-2xl">{step.title}</h3>
+                  <h3 className="mt-3 font-display text-xl font-semibold uppercase tracking-normal sm:text-2xl">{step.title}</h3>
                   <p className="mt-2 text-sm leading-6 text-paper/60">{step.copy}</p>
                 </div>
               ))}

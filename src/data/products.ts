@@ -79,10 +79,10 @@ export const nightAccessTee: Product = {
     { label: "Front artwork", src: "/assets/bgfront.png", kind: "detail" }
   ],
   variants: [
-    { name: "White / Red", textile: "#F4F1EC", print: "#D71920", accent: "#D71920" },
-    { name: "Black / Red", textile: "#0A0908", print: "#D71920", accent: "#D71920" },
-    { name: "Black / Violet", textile: "#0A0908", print: "#8C5BFF", accent: "#8C5BFF" },
-    { name: "White / Blue", textile: "#F4F1EC", print: "#156BFF", accent: "#156BFF" }
+    { name: "White / Red", textile: "#F7F1ED", print: "#B61E33", accent: "#B61E33" },
+    { name: "Black / Red", textile: "#0D0A0B", print: "#B61E33", accent: "#B61E33" },
+    { name: "Black / Violet", textile: "#0D0A0B", print: "#8C5BFF", accent: "#8C5BFF" },
+    { name: "White / Blue", textile: "#F7F1ED", print: "#156BFF", accent: "#156BFF" }
   ],
   sizes: ["XS", "S", "M", "L", "XL", "XXL"]
 };

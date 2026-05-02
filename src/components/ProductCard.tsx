@@ -31,7 +31,7 @@ export function ProductCard({ product }: { product: Product }) {
       </div>
       <div className="mt-5 flex items-end justify-between gap-4 px-1 pb-1">
         <div className="min-w-0">
-          <p className="truncate font-display text-xl font-semibold tracking-[-0.03em]">{product.shortTitle}</p>
+          <p className="truncate font-display text-xl font-semibold tracking-normal">{product.shortTitle}</p>
           <p className="mt-1 text-xs uppercase tracking-[0.18em] text-stone">{product.colorway}</p>
           <p className="mt-3 text-sm font-semibold">{product.price} EUR</p>
         </div>

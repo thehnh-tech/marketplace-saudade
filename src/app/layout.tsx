@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Inter_Tight, JetBrains_Mono, UnifrakturMaguntia } from "next/font/google";
+import { Cormorant_Garamond, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Footer } from "@/components/Footer";
 import { JsonLd } from "@/components/JsonLd";
@@ -19,9 +19,19 @@ import {
 } from "@/lib/seo";
 
 const body = Inter({ subsets: ["latin"], variable: "--font-body", display: "swap" });
-const display = Inter_Tight({ subsets: ["latin"], variable: "--font-display", display: "swap" });
+const display = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-display",
+  display: "swap"
+});
 const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono", display: "swap" });
-const serif = UnifrakturMaguntia({ weight: "400", subsets: ["latin"], variable: "--font-serif", display: "swap" });
+const serif = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-serif",
+  display: "swap"
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -85,10 +95,12 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/assets/bgouter.png", type: "image/png", sizes: "any" }
+      { url: "/icons/favicon-32x32.png", type: "image/png", sizes: "32x32" },
+      { url: "/icons/favicon-16x16.png", type: "image/png", sizes: "16x16" },
+      { url: "/icons/icon-1024.png", type: "image/png", sizes: "1024x1024" }
     ],
-    shortcut: ["/assets/bgouter.png"],
-    apple: [{ url: "/assets/bgouter.png", sizes: "180x180", type: "image/png" }]
+    shortcut: ["/icons/favicon-32x32.png"],
+    apple: [{ url: "/icons/apple-touch-icon.png", sizes: "180x180", type: "image/png" }]
   },
   manifest: "/manifest.webmanifest",
   appleWebApp: {
@@ -98,14 +110,14 @@ export const metadata: Metadata = {
   },
   other: {
     "apple-mobile-web-app-capable": "yes",
-    "msapplication-TileColor": "#D71920"
+    "msapplication-TileColor": "#B61E33"
   }
 };
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#F4F1EC" },
-    { media: "(prefers-color-scheme: dark)", color: "#0A0908" }
+    { media: "(prefers-color-scheme: light)", color: "#F7F1ED" },
+    { media: "(prefers-color-scheme: dark)", color: "#0D0A0B" }
   ],
   colorScheme: "light",
   width: "device-width",

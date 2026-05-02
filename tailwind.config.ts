@@ -5,13 +5,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        paper: "#F4F1EC",
-        bone: "#FBF8F2",
-        ink: "#0A0908",
-        red: "#D71920",
-        signal: "#FF2C36",
-        stone: "#8A857E",
-        night: "#070607"
+        paper: "#F7F1ED",
+        bone: "#FFFAF7",
+        ink: "#1B1616",
+        red: "#B61E33",
+        signal: "#CF4458",
+        stone: "#7C6666",
+        night: "#0D0A0B"
       },
       fontFamily: {
         display: ["var(--font-display)", "Arial", "sans-serif"],
@@ -20,8 +20,8 @@ const config: Config = {
         serif: ["var(--font-serif)", "Georgia", "serif"]
       },
       boxShadow: {
-        red: "0 0 30px rgba(215, 25, 32, 0.24)",
-        signal: "0 0 28px rgba(255, 44, 54, 0.45)"
+        red: "0 10px 24px rgba(182, 30, 51, 0.12)",
+        signal: "0 12px 28px rgba(207, 68, 88, 0.18)"
       },
       keyframes: {
         marquee: {

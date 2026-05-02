@@ -16,7 +16,7 @@ export function Marquee({
         {content.map((item, index) => (
           <span key={`${item}-${index}`} className="flex items-center gap-8">
             <span>{item}</span>
-            <span className="text-paper/80">✦</span>
+            <span className="text-paper/80">*</span>
           </span>
         ))}
       </div>

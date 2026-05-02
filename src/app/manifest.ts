@@ -10,13 +10,13 @@ export default function manifest(): MetadataRoute.Manifest {
     scope: "/",
     display: "standalone",
     orientation: "portrait",
-    background_color: "#F4F1EC",
-    theme_color: "#D71920",
+    background_color: "#F7F1ED",
+    theme_color: "#B61E33",
     categories: ["shopping", "lifestyle", "fashion"],
     icons: [
-      { src: "/assets/bgouter.png", sizes: "192x192", type: "image/png", purpose: "any" },
-      { src: "/assets/bgouter.png", sizes: "512x512", type: "image/png", purpose: "any" },
-      { src: "/assets/bgouter.png", sizes: "512x512", type: "image/png", purpose: "maskable" }
+      { src: "/icons/android-chrome-192x192.png", sizes: "192x192", type: "image/png", purpose: "any" },
+      { src: "/icons/android-chrome-512x512.png", sizes: "512x512", type: "image/png", purpose: "any" },
+      { src: "/icons/android-chrome-512x512.png", sizes: "512x512", type: "image/png", purpose: "maskable" }
     ]
   };
 }

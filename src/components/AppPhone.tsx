@@ -24,7 +24,7 @@ export function AppPhone({ title = "Night Access", mode = "capture" }: AppPhoneP
             0024
           </span>
         </div>
-        <p className="font-display text-lg font-semibold uppercase tracking-[-0.04em] sm:text-xl">{title}</p>
+        <p className="font-display text-lg font-semibold uppercase tracking-normal sm:text-xl">{title}</p>
         <p className="mt-0.5 font-mono text-[8px] font-bold uppercase tracking-[0.28em] text-paper/45">
           {mode === "capture" ? "Live capture" : "Private archive"}
         </p>
@@ -81,7 +81,7 @@ function FeedBody() {
         >
           <div className={`aspect-square w-12 shrink-0 rounded-xl bg-gradient-to-br ${item.tone}`} />
           <div className="flex flex-1 flex-col justify-center">
-            <p className="font-display text-xs font-semibold uppercase tracking-[-0.02em]">{item.place}</p>
+            <p className="font-display text-xs font-semibold uppercase tracking-normal">{item.place}</p>
             <p className="mt-0.5 font-mono text-[8px] font-bold uppercase tracking-[0.22em] text-paper/55">
               {item.time} · received
             </p>

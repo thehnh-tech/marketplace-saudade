@@ -99,7 +99,7 @@ export function Navbar() {
       </div>
       {open ? (
         <div className="fixed inset-0 z-[100] flex min-h-screen flex-col bg-ink text-paper md:hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(215,25,32,0.28),transparent_18rem),linear-gradient(180deg,#090808,#050505)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,#151112,#0d0a0b)]" />
           <span className="pointer-events-none absolute inset-x-0 top-20 h-px bg-gradient-to-r from-transparent via-red to-transparent" />
           <div className="relative flex h-20 shrink-0 items-center justify-between border-b border-paper/10 px-5">
             <Logo light />
@@ -112,7 +112,7 @@ export function Navbar() {
               Close
             </button>
           </div>
-          <nav className="relative flex-1 overflow-y-auto px-5 pt-8 font-display text-4xl font-semibold uppercase tracking-[-0.04em] sm:text-5xl">
+          <nav className="relative flex-1 overflow-y-auto px-5 pt-8 font-display text-4xl font-semibold uppercase tracking-normal sm:text-5xl">
             {links.map((link) => {
               const active = pathname === link.href;
               return (
@@ -127,7 +127,7 @@ export function Navbar() {
                   }
                 >
                   <span>{link.label}</span>
-                  <span className="text-base font-mono tracking-[0.2em] text-paper/40">→</span>
+                  <span className="text-base font-mono text-paper/40">-&gt;</span>
                 </Link>
               );
             })}

@@ -58,7 +58,7 @@ export function LegalLayout({ eyebrow, title, intro, updated, sections, pathname
         <div className="mt-12 grid gap-8">
           {sections.map((section) => (
             <section key={section.heading} className="rounded-[24px] border border-red/15 bg-bone p-6 sm:rounded-[28px] sm:p-8">
-              <h2 className="font-display text-2xl font-semibold uppercase tracking-[-0.03em] sm:text-3xl">{section.heading}</h2>
+              <h2 className="font-display text-2xl font-semibold uppercase tracking-normal sm:text-3xl">{section.heading}</h2>
               <div className="mt-4 grid gap-4 text-sm leading-7 text-ink/70 sm:text-base sm:leading-8">
                 {section.body.map((paragraph, index) => (
                   <p key={index}>{paragraph}</p>

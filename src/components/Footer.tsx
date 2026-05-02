@@ -7,7 +7,7 @@ export function Footer() {
       <Marquee />
       <div className="mx-auto grid max-w-[1500px] gap-10 px-4 py-14 sm:px-6 sm:gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1fr] lg:px-8">
         <div>
-          <p className="font-display text-5xl font-semibold uppercase tracking-[-0.06em] text-red sm:text-6xl">Saudade</p>
+          <p className="font-display text-5xl font-semibold uppercase tracking-normal text-red sm:text-6xl">Saudade</p>
           <p className="mt-5 max-w-md text-sm leading-7 text-ink/70">
             Built for the night. Remembered forever. A garment becomes a signal, a door, and a private archive.
           </p>

@@ -72,7 +72,7 @@ export default function AppExperiencePage() {
                 >
                   <span className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-red/70 to-transparent opacity-0 transition group-hover:opacity-100" />
                   <p className="font-mono text-xs font-bold uppercase tracking-[0.28em] text-red">{step.meta}</p>
-                  <h2 className="mt-4 font-display text-2xl font-semibold uppercase tracking-[-0.04em] sm:text-3xl">{step.title}</h2>
+                  <h2 className="mt-4 font-display text-2xl font-semibold uppercase tracking-normal sm:text-3xl">{step.title}</h2>
                   <p className="mt-3 text-sm leading-7 text-paper/60">{step.copy}</p>
                 </div>
               ))}
