@@ -26,7 +26,7 @@ export function AppPhone({ title = "Night Access", mode = "capture" }: AppPhoneP
         </div>
         <p className="font-display text-lg font-semibold uppercase tracking-normal sm:text-xl">{title}</p>
         <p className="mt-0.5 font-mono text-[8px] font-bold uppercase tracking-[0.28em] text-paper/45">
-          {mode === "capture" ? "BeReal capture" : "Private archive"}
+          {mode === "capture" ? "Double memories" : "Private archive"}
         </p>
 
         {mode === "capture" ? <CaptureBody /> : <FeedBody />}
@@ -46,27 +46,22 @@ export function AppPhone({ title = "Night Access", mode = "capture" }: AppPhoneP
 function CaptureBody() {
   return (
     <div className="mt-3 flex flex-1 flex-col gap-2.5">
-      <div className="grid flex-1 grid-cols-2 gap-2">
-        <div className="relative aspect-[3/4] overflow-hidden rounded-[20px] border border-red/35 bg-paper text-red">
-          <Image src="/assets/bgback.png" alt="Rear preview" fill className="object-cover" priority />
-          <div className="absolute left-2 top-2 rounded-full bg-ink/85 px-2 py-1 font-mono text-[8px] font-bold uppercase tracking-[0.22em] text-paper">
-            Rear
-          </div>
-          <div className="scan-line absolute inset-x-0 top-0 h-12 animate-scan" />
-        </div>
-        <div className="relative aspect-[3/4] overflow-hidden rounded-[20px] border border-red/35 bg-paper text-red">
-          <Image src="/assets/bgfront.png" alt="Front preview" fill className="object-cover" priority />
-          <div className="absolute left-2 top-2 rounded-full bg-ink/85 px-2 py-1 font-mono text-[8px] font-bold uppercase tracking-[0.22em] text-paper">
-            Front
-          </div>
-          <div className="scan-line absolute inset-x-0 top-0 h-12 animate-scan" />
-        </div>
+      <div className="grid grid-cols-3 gap-1.5 rounded-[18px] border border-paper/10 bg-paper/5 p-1.5 font-mono text-[8px] font-bold uppercase tracking-[0.22em] text-paper/55">
+        <span className="rounded-full bg-red px-2 py-1 text-center text-paper">Double memories</span>
+        <span className="rounded-full bg-paper/5 px-2 py-1 text-center">Front</span>
+        <span className="rounded-full bg-paper/5 px-2 py-1 text-center">Back</span>
       </div>
-      <div className="rounded-[18px] border border-paper/10 bg-paper/5 p-2.5">
-        <p className="font-display text-xs font-semibold uppercase tracking-normal">Auto pair</p>
-        <p className="mt-1 font-mono text-[8px] font-bold uppercase tracking-[0.22em] text-paper/55">
-          One shot each side, then review together.
-        </p>
+      <div className="relative flex-1 overflow-hidden rounded-[22px] border border-red/35 bg-paper text-red">
+        <div className="absolute inset-0">
+          <Image src="/assets/bgback.png" alt="Rear preview" fill className="object-cover" priority />
+        </div>
+        <div className="absolute right-3 top-3 h-[38%] w-[38%] overflow-hidden rounded-[18px] border-2 border-paper bg-night shadow-red">
+          <Image src="/assets/bgfront.png" alt="Front preview" fill className="object-cover" priority />
+        </div>
+        <div className="scan-line absolute inset-x-0 top-0 h-12 animate-scan" />
+        <div className="absolute inset-x-3 bottom-3 rounded-[18px] bg-ink/85 px-3 py-2 font-mono text-[7px] font-bold uppercase tracking-[0.24em] text-paper">
+          Rear full frame. Front inset. Tap to swap in feed.
+        </div>
       </div>
       <button
         type="button"
@@ -82,16 +77,14 @@ function FeedBody() {
   return (
     <div className="mt-3 flex flex-1 flex-col gap-1.5 overflow-hidden">
       {feedItems.map((item) => (
-        <div key={item.time} className="rounded-2xl border border-paper/10 bg-paper/5 p-1.5">
-          <div className="flex items-center justify-between px-1 pb-1 font-mono text-[8px] font-bold uppercase tracking-[0.22em] text-paper/45">
+        <div key={item.time} className="rounded-2xl border border-paper/10 bg-paper/5 p-2">
+          <div className="flex items-center justify-between px-1 pb-2 font-mono text-[8px] font-bold uppercase tracking-[0.22em] text-paper/45">
             <span>{item.place}</span>
             <span>{item.time}</span>
           </div>
-          <div className="grid grid-cols-2 gap-1.5">
-            <div className="relative aspect-[3/4] overflow-hidden rounded-[14px]">
-              <Image src={item.back} alt={`${item.place} rear`} fill className="object-cover" />
-            </div>
-            <div className="relative aspect-[3/4] overflow-hidden rounded-[14px]">
+          <div className="relative aspect-[4/5] overflow-hidden rounded-[18px] border border-paper/10 bg-night">
+            <Image src={item.back} alt={`${item.place} rear`} fill className="object-cover" />
+            <div className="absolute right-2 top-2 h-[34%] w-[34%] overflow-hidden rounded-[14px] border-2 border-paper bg-night shadow-red">
               <Image src={item.front} alt={`${item.place} front`} fill className="object-cover" />
             </div>
           </div>
