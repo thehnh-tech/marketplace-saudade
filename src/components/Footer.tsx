@@ -11,12 +11,12 @@ export function Footer() {
           <Image
             src="/logo.png"
             alt="SAUDADE"
-            width={148}
-            height={148}
-            className="h-28 w-28 rounded-[28px] border border-red/20 shadow-red sm:h-32 sm:w-32"
+            width={72}
+            height={72}
+            className="h-16 w-16 rounded-2xl shadow-red sm:h-18 sm:w-18"
             priority
           />
-          <p className="mt-5 font-display text-5xl font-semibold uppercase tracking-normal text-red sm:text-6xl">Saudade</p>
+          <p className="mt-4 font-display text-4xl font-semibold uppercase tracking-normal text-red sm:text-5xl">Saudade</p>
           <p className="mt-5 max-w-md text-sm leading-7 text-ink/70">
             Built for the night. Remembered forever. A garment becomes a signal, a door, and a private archive.
           </p>
