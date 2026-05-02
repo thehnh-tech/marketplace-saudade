@@ -6,7 +6,7 @@ export const SITE_TAGLINE = "Picture me for better memories";
 export const SITE_DESCRIPTION =
   "SAUDADE 0024 — Night Access. A premium oversized streetwear t-shirt with a real QR code that turns parties, clubs and trips into a private photo archive. Shipped worldwide from Switzerland.";
 export const DEFAULT_OG_IMAGE = "/assets/tee-white-red-card.png";
-export const ORGANIZATION_LOGO = "/icons/icon-1024.png";
+export const ORGANIZATION_LOGO = "/icon.png";
 export const TWITTER_HANDLE = "@saudade";
 export const PUBLISHER_HANDLE = "@thehnh";
 export const LOCALE = "en_US";

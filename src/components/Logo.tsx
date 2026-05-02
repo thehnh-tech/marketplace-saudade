@@ -5,7 +5,7 @@ export function Logo({ light = false }: { light?: boolean }) {
   return (
     <Link href="/" className="inline-flex items-center gap-2.5" aria-label="SAUDADE home">
       <Image
-        src="/icons/apple-touch-icon.png"
+        src="/icon.png"
         alt="SAUDADE"
         width={40}
         height={40}
