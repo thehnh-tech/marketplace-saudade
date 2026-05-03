@@ -13,7 +13,7 @@ export function Footer() {
             alt="SAUDADE"
             width={56}
             height={56}
-            className="h-12 w-12 object-contain sm:h-14 sm:w-14"
+            className="h-12 w-12 rounded-2xl object-contain sm:h-14 sm:w-14"
             priority
           />
           <p className="mt-4 font-sans text-3xl font-semibold uppercase tracking-normal text-red sm:text-4xl">Saudade</p>
