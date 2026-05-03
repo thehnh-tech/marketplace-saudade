@@ -16,7 +16,7 @@ export function Footer() {
             className="h-12 w-12 object-contain sm:h-14 sm:w-14"
             priority
           />
-          <p className="mt-4 font-serif text-3xl font-semibold uppercase tracking-normal text-red sm:text-4xl">Saudade</p>
+          <p className="mt-4 font-sans text-3xl font-semibold uppercase tracking-normal text-red sm:text-4xl">Saudade</p>
           <p className="mt-5 max-w-md text-sm leading-7 text-ink/70">
             Built for the night. Remembered forever. A garment becomes a signal, a door, and a private archive.
           </p>
@@ -30,7 +30,7 @@ export function Footer() {
           </div>
         </div>
         <div>
-          <p className="mb-5 font-serif text-sm font-semibold uppercase tracking-normal text-red">Navigation</p>
+          <p className="mb-5 font-sans text-sm font-semibold uppercase tracking-normal text-red">Navigation</p>
           <div className="grid gap-3 text-sm font-medium text-ink/70">
             <Link href="/shop" className="transition hover:text-red">Shop</Link>
             <Link href="/concept" className="transition hover:text-red">Concept</Link>
@@ -39,7 +39,7 @@ export function Footer() {
           </div>
         </div>
         <div>
-          <p className="mb-5 font-serif text-sm font-semibold uppercase tracking-normal text-red">Legal</p>
+          <p className="mb-5 font-sans text-sm font-semibold uppercase tracking-normal text-red">Legal</p>
           <div className="grid gap-3 text-sm font-medium text-ink/70">
             <Link href="/terms" className="transition hover:text-red">Terms of Service</Link>
             <Link href="/privacy" className="transition hover:text-red">Privacy & Use</Link>
@@ -48,7 +48,7 @@ export function Footer() {
           </div>
         </div>
         <div>
-          <p className="font-serif text-sm font-semibold uppercase tracking-normal text-red">Private list</p>
+          <p className="font-sans text-sm font-semibold uppercase tracking-normal text-red">Private list</p>
           <form className="mt-5 flex border border-red/35 bg-bone focus-within:border-red">
             <input
               className="min-w-0 flex-1 bg-transparent px-4 py-4 text-sm outline-none placeholder:text-ink/40"
