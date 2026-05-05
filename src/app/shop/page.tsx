@@ -30,6 +30,9 @@ export const metadata: Metadata = {
   }
 };
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 const collectionPageLd = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",

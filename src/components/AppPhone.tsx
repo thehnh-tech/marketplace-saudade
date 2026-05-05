@@ -26,7 +26,7 @@ export function AppPhone({ title = "Night Access", mode = "capture" }: AppPhoneP
         </div>
         <p className="font-display text-lg font-semibold uppercase tracking-normal sm:text-xl">{title}</p>
         <p className="mt-0.5 font-mono text-[8px] font-bold uppercase tracking-[0.28em] text-paper/45">
-          {mode === "capture" ? "Double memories" : "Private archive"}
+          {mode === "capture" ? "Camera capture" : "Private archive"}
         </p>
 
         {mode === "capture" ? <CaptureBody /> : <FeedBody />}

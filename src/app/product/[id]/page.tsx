@@ -5,7 +5,6 @@ import { notFound } from "next/navigation";
 import { AppPhone } from "@/components/AppPhone";
 import { BuyPanel } from "@/components/BuyPanel";
 import { JsonLd } from "@/components/JsonLd";
-import { products } from "@/data/products";
 import { getMarketplaceProductById } from "@/lib/products";
 import { absoluteUrl, breadcrumbLd, productLd } from "@/lib/seo";
 
@@ -13,9 +12,8 @@ type ProductPageProps = {
   params: Promise<{ id: string }>;
 };
 
-export function generateStaticParams() {
-  return products.map((product) => ({ id: product.id }));
-}
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
   const { id } = await params;

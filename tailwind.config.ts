@@ -14,6 +14,7 @@ const config: Config = {
         night: "#0D0A0B"
       },
       fontFamily: {
+        sans: ["var(--font-sans)", "Arial", "sans-serif"],
         display: ["var(--font-display)", "Arial", "sans-serif"],
         body: ["var(--font-body)", "Arial", "sans-serif"],
         mono: ["var(--font-mono)", "monospace"],
