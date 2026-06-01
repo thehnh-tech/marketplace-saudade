@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { RefreshCw } from "lucide-react";
 
 type PublicFeedPhoto = {
@@ -16,25 +16,6 @@ type PublicFeedResponse = {
   photos?: PublicFeedPhoto[];
   updatedAt?: string;
 };
-
-const fallbackPhotos: PublicFeedPhoto[] = [
-  {
-    id: -1,
-    imageUrl: "/assets/bgback.png",
-    secondaryImageUrl: "/assets/bgfront.png",
-    createdAt: new Date().toISOString(),
-    primaryLabel: "Rear",
-    secondaryLabel: "Front"
-  },
-  {
-    id: -2,
-    imageUrl: "/assets/front.png",
-    secondaryImageUrl: null,
-    createdAt: new Date().toISOString(),
-    primaryLabel: "Front",
-    secondaryLabel: null
-  }
-];
 
 function formatDate(value: string) {
   const date = new Date(value);
@@ -74,7 +55,6 @@ export function PublicFeedPhone() {
     return () => window.clearInterval(timer);
   }, []);
 
-  const visiblePhotos = useMemo(() => photos.length ? photos : fallbackPhotos, [photos]);
   const lastUpdated = updatedAt ? formatDate(updatedAt) : "Waiting";
 
   return (
@@ -107,14 +87,14 @@ export function PublicFeedPhone() {
         </div>
 
         <div className="mt-3 flex items-center justify-between rounded-full border border-paper/10 bg-paper/5 px-3 py-2 font-mono text-[8px] font-bold uppercase text-paper/45">
-          <span>{photos.length ? `${photos.length} captures` : "Preview mode"}</span>
+          <span>{loading ? "Loading feed" : `${photos.length} captures`}</span>
           <span>{lastUpdated}</span>
         </div>
 
         {error ? <p className="mt-2 rounded-2xl border border-red/30 bg-red/10 px-3 py-2 text-[10px] font-bold text-red">{error}</p> : null}
 
         <div className="no-scrollbar mt-3 flex flex-1 flex-col gap-3 overflow-y-auto pr-1">
-          {visiblePhotos.map((photo) => (
+          {photos.map((photo) => (
             <article key={photo.id} className="rounded-[22px] border border-paper/10 bg-paper/5 p-2.5">
               <div className="mb-2 flex items-center justify-between px-1 font-mono text-[8px] font-bold uppercase text-paper/45">
                 <span>{photo.id > 0 ? `Capture #${photo.id}` : "Waiting for scans"}</span>
@@ -136,6 +116,16 @@ export function PublicFeedPhone() {
               </div>
             </article>
           ))}
+          {!loading && photos.length === 0 ? (
+            <div className="grid flex-1 place-items-center rounded-[22px] border border-dashed border-paper/15 bg-paper/[0.03] p-5 text-center">
+              <div>
+                <p className="font-display text-lg font-semibold uppercase leading-none tracking-normal">No public captures yet</p>
+                <p className="mt-3 text-xs font-bold leading-6 text-paper/45">
+                  The real sticker QR feed will appear here as soon as photos are sent.
+                </p>
+              </div>
+            </div>
+          ) : null}
         </div>
 
         <div className="mt-2 flex items-center justify-between font-mono text-[8px] uppercase text-paper/35">
