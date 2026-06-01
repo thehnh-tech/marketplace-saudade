@@ -17,6 +17,8 @@ type PublicFeedResponse = {
   updatedAt?: string;
 };
 
+const DIRECT_FEED_URL = "https://back-saudade.thehnh.tech/api/public-feed/photos?limit=24";
+
 function formatDate(value: string) {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return "Just now";
@@ -34,13 +36,36 @@ export function PublicFeedPhone() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  async function fetchFeed(url: string) {
+    const response = await fetch(url, { cache: "no-store" });
+    if (!response.ok) throw new Error("Feed unavailable");
+    return await response.json() as PublicFeedResponse;
+  }
+
   async function loadFeed() {
+    let body: PublicFeedResponse | null = null;
+
     try {
-      const response = await fetch("/api/public-feed", { cache: "no-store" });
-      if (!response.ok) throw new Error("Feed unavailable");
-      const body = await response.json() as PublicFeedResponse;
-      setPhotos(body.photos ?? []);
-      setUpdatedAt(body.updatedAt ?? new Date().toISOString());
+      body = await fetchFeed("/api/public-feed");
+    } catch {
+      body = null;
+    }
+
+    if (!body?.photos?.length) {
+      try {
+        body = await fetchFeed(DIRECT_FEED_URL);
+      } catch {
+        if (!body) {
+          setError("Live feed temporarily unavailable");
+          setLoading(false);
+          return;
+        }
+      }
+    }
+
+    try {
+      setPhotos(body?.photos ?? []);
+      setUpdatedAt(body?.updatedAt ?? new Date().toISOString());
       setError("");
     } catch {
       setError("Live feed temporarily unavailable");
