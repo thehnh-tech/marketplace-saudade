@@ -1,29 +1,29 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { AppPhone } from "@/components/AppPhone";
 import { CTASection } from "@/components/CTASection";
 import { JsonLd } from "@/components/JsonLd";
 import { Marquee } from "@/components/Marquee";
 import { ProductCard } from "@/components/ProductCard";
+import { PublicFeedPhone } from "@/components/PublicFeedPhone";
 import { SectionHeader } from "@/components/SectionHeader";
 import { appSteps } from "@/data/products";
 import { getMarketplaceProducts } from "@/lib/products";
 import { breadcrumbLd, itemListLd, SITE_NAME, SITE_TAGLINE, SITE_URL } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: `${SITE_NAME} 0024 — Night Access · Premium Streetwear T-Shirt with QR Code`,
+  title: `Picture me by SAUDADE - ${SITE_NAME} 0024 Night Access`,
   description:
-    "SAUDADE 0024 Night Access. A heavyweight oversized t-shirt with a real QR code that turns every party into a private photo archive. Picture me for better memories — shipped worldwide from Switzerland.",
+    "Picture me by SAUDADE. A live public sticker QR feed connected to SAUDADE 0024 Night Access streetwear, shipped worldwide from Switzerland.",
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
-    title: `${SITE_NAME} 0024 — Night Access`,
+    title: `Picture me by SAUDADE - ${SITE_NAME} 0024`,
     description: SITE_TAGLINE,
     url: SITE_URL
   },
   twitter: {
-    title: `${SITE_NAME} 0024 — Night Access`,
+    title: `Picture me by SAUDADE - ${SITE_NAME} 0024`,
     description: SITE_TAGLINE
   }
 };
@@ -33,26 +33,25 @@ export const revalidate = 0;
 
 export default async function HomePage() {
   const products = await getMarketplaceProducts();
-  const heroProduct = products[0];
 
   return (
     <main>
       <JsonLd id="ld-home-itemlist" data={itemListLd(products)} />
       <JsonLd id="ld-home-breadcrumb" data={breadcrumbLd([{ name: "Home", url: "/" }])} />
-      <section className="relative overflow-hidden border-b border-red/20 px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+      <section className="relative overflow-hidden border-b border-red/20 px-4 py-8 sm:px-6 sm:py-10 lg:px-8">
         <span className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-red/45 to-transparent" />
-        <div className="relative mx-auto grid max-w-[1500px] gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
-          <div className="py-4 sm:py-8 lg:py-20">
+        <div className="relative mx-auto grid min-h-[calc(100svh-92px)] max-w-[1500px] gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+          <div className="py-4 sm:py-8 lg:py-14">
             <p className="font-mono text-xs font-bold uppercase tracking-[0.28em] text-red">
               <span className="mr-2 inline-block h-1.5 w-1.5 -translate-y-0.5 rounded-full bg-signal shadow-signal align-middle animate-pulseGlow" />
-              Night Access Drop
+              Global sticker project
             </p>
-            <h1 className="soft-title mt-6 font-display text-6xl font-semibold uppercase leading-[0.9] sm:text-8xl lg:text-[8.5rem]">
-              Collection 0024
+            <h1 className="soft-title mt-6 max-w-4xl font-display text-6xl font-semibold uppercase leading-[0.9] sm:text-8xl lg:text-[8.2rem]">
+              Picture me BY SAUDADE
             </h1>
-            <p className="mt-6 text-sm font-semibold uppercase tracking-[0.24em] text-red">Picture me for better memories</p>
-            <p className="mt-8 max-w-md text-base leading-8 text-ink/68 sm:text-lg">
-              A tee for the nights you do not want to lose. Scan the piece, send a photo, keep the memory.
+            <p className="mt-6 text-sm font-semibold uppercase tracking-[0.24em] text-red">A sticker QR from the four corners of the world</p>
+            <p className="mt-8 max-w-xl text-base leading-8 text-ink/68 sm:text-lg">
+              Scan the special SAUDADE sticker, take a live photo, and enter the public homepage feed. The clothing brand becomes a moving archive of real moments.
             </p>
             <div className="mt-10 flex flex-col gap-3 sm:flex-row">
               <Link
@@ -62,31 +61,21 @@ export default async function HomePage() {
                 Shop the drop
               </Link>
               <Link
-                href="/app-experience"
+                href="/concept"
                 className="rounded-full border border-red/25 px-7 py-4 text-center text-sm font-semibold uppercase tracking-[0.18em] text-red transition hover:border-red hover:bg-red hover:text-paper"
               >
-                How it works
+                Read the concept
               </Link>
             </div>
           </div>
-          <div className="relative">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[28px] bg-night shadow-red sm:rounded-[38px]">
-              <Image
-                src={heroProduct.cardImage}
-                alt={heroProduct.title}
-                fill
-                sizes="(min-width: 1024px) 55vw, 100vw"
-                className="object-cover"
-                priority
-              />
-              <span className="absolute left-4 top-4 rounded-full bg-paper/90 px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-red">
-                Drop 0024 — Live
-              </span>
-              <span className="absolute bottom-4 right-4 inline-flex items-center gap-1.5 rounded-full bg-ink/75 px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-paper">
-                <span className="h-1 w-1 rounded-full bg-signal animate-pulseGlow" />
-                Scan ready
-              </span>
+          <div className="relative grid gap-5 py-2 lg:py-8">
+            <div className="mx-auto max-w-md text-center lg:mx-0 lg:ml-auto lg:text-left">
+              <p className="font-mono text-xs font-bold uppercase tracking-[0.28em] text-red">Live homepage feed</p>
+              <p className="mt-3 text-sm leading-7 text-ink/65">
+                This feed updates every minute with photos sent from a special QR code placed around the world.
+              </p>
             </div>
+            <PublicFeedPhone />
           </div>
         </div>
       </section>
