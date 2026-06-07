@@ -1,26 +1,31 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Logo } from "./Logo";
 
 const links = [
-  { href: "/shop", label: "Shop" },
-  { href: "/concept", label: "Story" },
-  { href: "/app-experience", label: "Access" },
-  { href: "/cart", label: "Cart" }
+  { href: "/", label: "World Feed" },
+  { href: "/shop", label: "The Tee" },
+  { href: "/app-experience", label: "How it works" },
+  { href: "/concept", label: "About" }
 ];
 
 export function Navbar() {
-  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const [cartCount, setCartCount] = useState(0);
   const pathname = usePathname();
+  const onFeedPage = pathname === "/";
 
   useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
+    function onScroll() {
+      setScrolled(window.scrollY > 40);
+    }
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     function readCart() {
@@ -40,129 +45,92 @@ export function Navbar() {
     };
   }, []);
 
-  useEffect(() => {
-    if (typeof document === "undefined") return;
-    const previous = document.body.style.overflow;
-    document.body.style.overflow = open ? "hidden" : previous;
-    return () => {
-      document.body.style.overflow = previous;
-    };
-  }, [open]);
+  const solid = !onFeedPage || scrolled;
 
   return (
-    <header className="sticky top-0 z-40 border-b border-red/15 bg-paper/85 backdrop-blur-2xl">
-      <span className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-red/70 to-transparent" />
-      <div className="mx-auto flex h-20 max-w-[1500px] items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Logo />
-        <nav className="hidden items-center gap-9 text-xs font-medium uppercase tracking-[0.22em] md:flex">
-          {links.slice(0, 3).map((link) => {
+    <>
+      <header
+        className={
+          "fixed inset-x-0 top-0 z-[60] grid grid-cols-[1fr_auto_1fr] items-center px-[clamp(18px,4vw,60px)] py-4 transition " +
+          (solid
+            ? "bg-paper/95 backdrop-blur-xl border-b border-[var(--line)]"
+            : "bg-gradient-to-b from-paper/90 to-transparent backdrop-blur-[2px]")
+        }
+      >
+        <div className="flex items-center gap-2.5">
+          <Logo size={21} />
+        </div>
+
+        <nav className="hidden md:flex items-center gap-7 justify-center">
+          {links.map((link) => {
             const active = pathname === link.href;
             return (
               <Link
                 key={link.href}
                 href={link.href}
                 className={
-                  active
-                    ? "relative text-red after:absolute after:-bottom-1.5 after:left-0 after:right-0 after:h-px after:bg-red"
-                    : "transition hover:text-red"
+                  "font-mono text-[10px] uppercase transition pb-[3px] relative " +
+                  (active ? "text-brick opacity-100" : "text-ink opacity-60 hover:opacity-100 hover:text-brick")
                 }
+                style={{ letterSpacing: "0.2em" }}
               >
                 {link.label}
+                {active ? (
+                  <span className="absolute left-0 right-0 -bottom-[2px] h-px bg-brick" />
+                ) : null}
               </Link>
             );
           })}
         </nav>
-        <div className="hidden items-center gap-3 md:flex">
-          <Link
-            href="/shop"
-            className="rounded-full border border-red/25 px-5 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-red transition hover:border-red hover:bg-red hover:text-paper"
-          >
-            Drop 0024
-          </Link>
+
+        <div className="flex items-center justify-end gap-5">
           <Link
             href="/cart"
-            className="group relative rounded-full bg-ink px-5 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-paper transition hover:bg-night"
+            className="font-mono text-[10px] uppercase text-ink hover:text-brick transition"
+            style={{ letterSpacing: "0.2em" }}
           >
-            Cart {cartCount}
-            {cartCount > 0 ? (
-              <span className="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full bg-signal shadow-signal animate-pulseGlow" />
-            ) : null}
+            Bag ({String(cartCount).padStart(2, "0")})
           </Link>
         </div>
-        <button
-          type="button"
-          className="rounded-full border border-red/20 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] transition hover:border-red md:hidden"
-          onClick={() => setOpen(true)}
-          aria-label="Open menu"
-        >
-          Menu
-        </button>
-      </div>
-      <AnimatePresence>
-        {open ? (
-        <motion.div
-          className="fixed inset-0 z-[100] flex min-h-screen flex-col bg-ink text-paper md:hidden"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -8 }}
-          transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,#151112,#0d0a0b)]" />
-          <span className="pointer-events-none absolute inset-x-0 top-20 h-px bg-gradient-to-r from-transparent via-red to-transparent" />
-          <div className="relative flex h-20 shrink-0 items-center justify-between border-b border-paper/10 px-5">
-            <Logo light />
-            <button
-              type="button"
-              className="rounded-full border border-paper/20 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] transition hover:border-red hover:text-red"
-              onClick={() => setOpen(false)}
-              aria-label="Close menu"
-            >
-              Close
-            </button>
-          </div>
-          <motion.nav
-            className="relative flex-1 overflow-y-auto px-5 pt-8 font-display text-4xl font-semibold uppercase tracking-normal sm:text-5xl"
-            initial="closed"
-            animate="open"
-            exit="closed"
-            variants={{
-              open: { transition: { staggerChildren: 0.035, delayChildren: 0.06 } },
-              closed: { transition: { staggerChildren: 0.02, staggerDirection: -1 } }
+      </header>
+
+      <MobileTabBar pathname={pathname} cartCount={cartCount} />
+    </>
+  );
+}
+
+function MobileTabBar({ pathname, cartCount }: { pathname: string; cartCount: number }) {
+  const tabs = [
+    { href: "/", label: "Feed" },
+    { href: "/shop", label: "Tee" },
+    { href: "/app-experience", label: "How" },
+    { href: "/concept", label: "About" },
+    { href: "/cart", label: `Bag${cartCount > 0 ? " ●" : ""}` }
+  ];
+  return (
+    <nav className="md:hidden fixed inset-x-0 bottom-0 z-[70] grid grid-cols-5 bg-paper/95 backdrop-blur-xl border-t border-[var(--line-2)]">
+      {tabs.map((tab) => {
+        const active = pathname === tab.href;
+        return (
+          <Link
+            key={tab.href}
+            href={tab.href}
+            className={
+              "relative py-3 text-center font-mono text-[8.5px] uppercase " +
+              (active ? "text-brick" : "text-stone hover:text-ink")
+            }
+            style={{
+              letterSpacing: "0.12em",
+              paddingBottom: "calc(11px + env(safe-area-inset-bottom))"
             }}
           >
-            {links.map((link) => {
-              const active = pathname === link.href;
-              return (
-                <motion.div
-                  key={link.href}
-                  variants={{
-                    open: { opacity: 1, x: 0 },
-                    closed: { opacity: 0, x: -12 }
-                  }}
-                  transition={{ duration: 0.18, ease: "easeOut" }}
-                >
-                  <Link
-                    href={link.href}
-                    onClick={() => setOpen(false)}
-                    className={
-                      active
-                        ? "flex items-center justify-between border-b border-paper/15 py-5 text-red"
-                        : "flex items-center justify-between border-b border-paper/15 py-5 transition hover:text-red"
-                    }
-                  >
-                    <span>{link.label}</span>
-                    <span className="text-base font-mono text-paper/40">-&gt;</span>
-                  </Link>
-                </motion.div>
-              );
-            })}
-          </motion.nav>
-          <div className="relative shrink-0 px-5 pb-8 pt-6 font-mono text-[10px] uppercase tracking-[0.28em] text-paper/45">
-            saudade.thehnh.tech
-          </div>
-        </motion.div>
-        ) : null}
-      </AnimatePresence>
-    </header>
+            {tab.label}
+            {active ? (
+              <span className="absolute top-0 left-1/2 -translate-x-1/2 w-4 h-[2px] bg-brick" />
+            ) : null}
+          </Link>
+        );
+      })}
+    </nav>
   );
 }

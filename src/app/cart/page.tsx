@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function CartPage() {
   return (
-    <main className="px-4 py-24 sm:px-6 lg:px-8">
+    <main className="max-w-[1480px] mx-auto pt-[clamp(110px,13vh,160px)] px-[clamp(18px,4vw,60px)] pb-20 animate-fadeIn">
       <CartClient />
     </main>
   );

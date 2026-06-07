@@ -1,25 +1,24 @@
 import type { Metadata } from "next";
-import { AppPhone } from "@/components/AppPhone";
+import Link from "next/link";
+import { HowItWorks } from "@/components/HowItWorks";
 import { JsonLd } from "@/components/JsonLd";
-import { SectionHeader } from "@/components/SectionHeader";
-import { appSteps } from "@/data/products";
 import { absoluteUrl, breadcrumbLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Night Access App - Scan, capture, archive",
+  title: "How it works — Saudade Night Access",
   description:
-    "How the SAUDADE Night Access app works. Scan the QR on the tee, capture a rear shot and a front shot, then the pair lands in the owner's private feed.",
+    "How the SAUDADE Night Access flow works. Scan the QR on the tee, take a dual-camera photo, and leave it sealed in the wearer's private archive — or share it with the World Feed.",
   keywords: [
-    "night access app",
+    "night access",
     "QR scan to camera",
     "private photo feed",
-    "saudade app experience",
-    "memory archive app"
+    "saudade app",
+    "memory archive"
   ],
   alternates: { canonical: "/app-experience" },
   openGraph: {
     type: "article",
-    title: "SAUDADE Night Access App",
+    title: "SAUDADE — How it works",
     description: "Scan the tee, send a paired capture, keep the night.",
     url: absoluteUrl("/app-experience")
   }
@@ -33,62 +32,56 @@ const howToLd = {
   totalTime: "PT1M",
   tool: [{ "@type": "HowToTool", name: "SAUDADE Night Access tee" }, { "@type": "HowToTool", name: "Smartphone camera" }],
   step: [
-    { "@type": "HowToStep", position: 1, name: "Scan the code", text: "Someone scans the QR printed on the tee with their phone camera." },
-    { "@type": "HowToStep", position: 2, name: "Camera opens", text: "The Night Access camera page opens immediately. It captures a rear frame, then flips to the front frame." },
-    { "@type": "HowToStep", position: 3, name: "Send the pair", text: "They review the two shots and send them together." },
-    { "@type": "HowToStep", position: 4, name: "Keep the archive", text: "The owner receives the paired capture in their private SAUDADE feed." }
+    { "@type": "HowToStep", position: 1, name: "Scan the back", text: "Point any phone camera at the QR printed on the back of the tee. No app to download." },
+    { "@type": "HowToStep", position: 2, name: "Enter Saudade", text: "The garment opens a private space tied to that exact piece — and only that piece." },
+    { "@type": "HowToStep", position: 3, name: "Leave a memory", text: "Take a dual-camera photo, the way the moment really looked. Send it to the wearer." },
+    { "@type": "HowToStep", position: 4, name: "Sealed or shared", text: "It lands in the wearer's private archive. With one tap, they can share it to the World Feed." }
   ]
 } as const;
 
 export default function AppExperiencePage() {
   return (
-    <main className="bg-ink text-paper">
+    <main className="max-w-[1480px] mx-auto pt-[clamp(110px,13vh,160px)] px-[clamp(18px,4vw,60px)] pb-20 animate-fadeIn">
       <JsonLd id="ld-experience-howto" data={howToLd} />
       <JsonLd
         id="ld-experience-breadcrumb"
         data={breadcrumbLd([
           { name: "Home", url: "/" },
-          { name: "Night Access", url: "/app-experience" }
+          { name: "How it works", url: "/app-experience" }
         ])}
       />
-      <section className="px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
-        <div className="mx-auto max-w-[1500px]">
-          <SectionHeader
-            dark
-            eyebrow="Night Access"
-            title="Scan it. Shoot it. Keep both frames."
-            copy="SAUDADE turns a tee into a private memory drop. The QR opens the camera. Rear and front shots land in the owner feed as one pair."
-          />
-          <div className="mt-12 grid gap-10 lg:grid-cols-2 lg:items-start lg:gap-14">
-            <div className="grid gap-6 sm:grid-cols-2">
-              <AppPhone mode="capture" />
-              <AppPhone mode="feed" title="Your Feed" />
-            </div>
-            <div className="grid gap-4">
-              {appSteps.map((step) => (
-                <div
-                  key={step.title}
-                  className="group relative overflow-hidden rounded-[28px] border border-paper/10 bg-paper/[0.04] p-6 transition hover:border-red/45"
-                >
-                  <span className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-red/70 to-transparent opacity-0 transition group-hover:opacity-100" />
-                  <p className="font-mono text-xs font-bold uppercase tracking-[0.28em] text-red">{step.meta}</p>
-                  <h2 className="mt-4 font-display text-2xl font-semibold uppercase tracking-normal sm:text-3xl">{step.title}</h2>
-                  <p className="mt-3 text-sm leading-7 text-paper/60">{step.copy}</p>
-                </div>
-              ))}
-            </div>
-          </div>
+
+      <header className="mb-[clamp(30px,4vw,52px)]">
+        <div className="eyebrow flex items-center gap-2">
+          <span className="star">✦</span> How it works
         </div>
-      </section>
-      <section className="border-t border-red/25 px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
-        <div className="corner-frame mx-auto max-w-[1500px] rounded-[34px] border border-red/25 p-6 sm:p-12 lg:p-16">
-          <p className="text-xs font-semibold uppercase tracking-[0.26em] text-red">The whole idea</p>
-          <h2 className="soft-title mt-6 max-w-5xl font-display text-4xl font-semibold uppercase leading-[0.96] sm:text-6xl lg:text-7xl">
-            Your garment becomes proof that the night happened.
+        <h2 className="font-display font-medium mt-3 leading-[1.02]" style={{ fontSize: "clamp(30px, 4.5vw, 56px)", letterSpacing: "-0.01em" }}>
+          A t-shirt that<br /><span className="italic-brick">keeps the moment.</span>
+        </h2>
+      </header>
+
+      <HowItWorks />
+
+      <section className="mt-[clamp(56px,8vw,120px)]">
+        <div className="corner-frame relative border border-[var(--line)] p-6 sm:p-12 lg:p-16">
+          <div className="eyebrow flex items-center gap-2">
+            <span className="star">✦</span> The whole idea
+          </div>
+          <h2 className="font-display font-medium mt-7 max-w-4xl leading-[1.02]" style={{ fontSize: "clamp(34px, 5vw, 64px)", letterSpacing: "-0.01em" }}>
+            Your garment becomes proof that<br />
+            <span className="italic-brick">the night happened.</span>
           </h2>
-          <p className="mt-7 max-w-2xl text-base leading-8 text-paper/62 sm:text-lg">
-            No overexplaining. You wear it. People scan it. The best moments come back to you.
+          <p className="mt-7 max-w-2xl text-ink/70 text-[16px] leading-[1.7]">
+            No overexplaining. You wear it. People scan it. The best moments come back to you, sealed by default.
           </p>
+          <div className="mt-9 flex flex-wrap gap-3">
+            <Link href="/shop" className="btn-editorial btn-brick">
+              Get the tee <span className="arr">→</span>
+            </Link>
+            <Link href="/" className="btn-editorial btn-outline">
+              Open the world feed <span className="arr">→</span>
+            </Link>
+          </div>
         </div>
       </section>
     </main>

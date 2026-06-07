@@ -17,14 +17,14 @@ type LegalLayoutProps = {
 };
 
 const links = [
-  { href: "/terms", label: "Terms of Service" },
-  { href: "/privacy", label: "Privacy & Use" },
-  { href: "/purchase", label: "Purchase Conditions" }
+  { href: "/terms", label: "Terms" },
+  { href: "/privacy", label: "Privacy" },
+  { href: "/purchase", label: "Purchase" }
 ];
 
 export function LegalLayout({ eyebrow, title, intro, updated, sections, pathname }: LegalLayoutProps) {
   return (
-    <main className="px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+    <main className="max-w-[1480px] mx-auto pt-[clamp(110px,13vh,160px)] px-[clamp(18px,4vw,60px)] pb-20 animate-fadeIn">
       <JsonLd
         id={`ld-legal-${pathname.replace("/", "")}`}
         data={breadcrumbLd([
@@ -32,34 +32,36 @@ export function LegalLayout({ eyebrow, title, intro, updated, sections, pathname
           { name: title, url: pathname }
         ])}
       />
-      <div className="mx-auto max-w-4xl">
-        <p className="font-mono text-xs font-bold uppercase tracking-[0.28em] text-red">
-          <span className="mr-2 inline-block h-1.5 w-1.5 -translate-y-0.5 rounded-full bg-signal shadow-signal align-middle animate-pulseGlow" />
-          {eyebrow}
-        </p>
-        <h1 className="soft-title mt-5 font-display text-4xl font-semibold uppercase leading-[0.96] sm:text-6xl lg:text-7xl">
+      <div className="max-w-4xl">
+        <div className="eyebrow flex items-center gap-2">
+          <span className="star">✦</span> {eyebrow}
+        </div>
+        <h1 className="font-display font-medium mt-3.5 leading-[1.02]" style={{ fontSize: "clamp(40px, 5vw, 64px)", letterSpacing: "-0.01em" }}>
           {title}
         </h1>
-        <p className="mt-6 max-w-2xl text-base leading-8 text-ink/65 sm:text-lg">{intro}</p>
-        <p className="mt-4 font-mono text-[11px] font-bold uppercase tracking-[0.28em] text-stone">Updated {updated}</p>
+        <p className="mt-5 max-w-2xl text-ink/75 text-[16px] leading-[1.7]">{intro}</p>
+        <p className="mt-4 font-mono text-[10px] uppercase text-stone" style={{ letterSpacing: "0.22em" }}>Updated {updated}</p>
 
-        <nav className="mt-10 flex flex-wrap gap-3">
+        <nav className="mt-8 flex flex-wrap gap-3">
           {links.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="rounded-full border border-red/25 px-4 py-2 font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-red transition hover:border-red hover:bg-red hover:text-paper"
+              className={
+                "btn-editorial " +
+                (pathname === link.href ? "btn-brick" : "btn-outline")
+              }
             >
               {link.label}
             </Link>
           ))}
         </nav>
 
-        <div className="mt-12 grid gap-8">
+        <div className="mt-12 grid gap-7">
           {sections.map((section) => (
-            <section key={section.heading} className="rounded-[24px] border border-red/15 bg-bone p-6 sm:rounded-[28px] sm:p-8">
-              <h2 className="font-display text-2xl font-semibold uppercase tracking-normal sm:text-3xl">{section.heading}</h2>
-              <div className="mt-4 grid gap-4 text-sm leading-7 text-ink/70 sm:text-base sm:leading-8">
+            <section key={section.heading} className="border-t border-[var(--line)] pt-7">
+              <h2 className="font-display font-medium" style={{ fontSize: "clamp(24px, 2.6vw, 32px)" }}>{section.heading}</h2>
+              <div className="mt-4 grid gap-3 text-ink/75 text-[15px] leading-[1.75]">
                 {section.body.map((paragraph, index) => (
                   <p key={index}>{paragraph}</p>
                 ))}
@@ -68,13 +70,13 @@ export function LegalLayout({ eyebrow, title, intro, updated, sections, pathname
           ))}
         </div>
 
-        <div className="mt-12 flex flex-col gap-4 rounded-[24px] border border-red/20 bg-paper p-6 text-sm leading-7 text-ink/65 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+        <div className="mt-12 border-t border-[var(--line)] pt-7 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="font-mono text-[11px] font-bold uppercase tracking-[0.26em] text-red">Contact</p>
-            <p className="mt-2">Questions, returns, custom orders: hello@saudade.thehnh.tech</p>
+            <p className="font-mono text-[10px] uppercase text-brick" style={{ letterSpacing: "0.22em" }}>Contact</p>
+            <p className="mt-1.5 text-ink/75 text-[14.5px]">Questions, returns, custom orders: hello@saudade.thehnh.tech</p>
           </div>
-          <p className="font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-stone">
-            Built by <Link href="https://thehnh.tech" className="text-red transition hover:text-ink">thehnh.tech</Link>
+          <p className="font-mono text-[10px] uppercase text-stone" style={{ letterSpacing: "0.22em" }}>
+            Built by <Link href="https://thehnh.tech" className="text-brick hover:text-ink transition">thehnh.tech</Link>
           </p>
         </div>
       </div>

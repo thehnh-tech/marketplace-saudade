@@ -48,7 +48,7 @@ export default async function ShopPage() {
   const products = await getMarketplaceProducts();
 
   return (
-    <main className="px-4 py-16 sm:px-6 lg:px-8">
+    <main className="max-w-[1480px] mx-auto pt-[clamp(110px,13vh,160px)] px-[clamp(18px,4vw,60px)] pb-20 animate-fadeIn">
       <JsonLd id="ld-shop-collection" data={collectionPageLd} />
       <JsonLd id="ld-shop-itemlist" data={itemListLd(products)} />
       <JsonLd
@@ -58,25 +58,23 @@ export default async function ShopPage() {
           { name: "Shop", url: "/shop" }
         ])}
       />
-      <div className="mx-auto max-w-[1500px]">
-        <SectionHeader
-          eyebrow="T-shirts"
-          title="SAUDADE 0024 — Night Access"
-          copy="The first category opens with heavyweight oversized graphic tees. White / Red leads the launch; darker variants preview the next drop. Shipped worldwide from Switzerland."
-        />
-        <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-y border-red/25 py-5 font-mono text-[11px] font-bold uppercase tracking-[0.28em]">
-          <div className="flex flex-wrap gap-x-6 gap-y-2 text-red">
-            <span>Drop 0024</span>
-            <span className="text-ink/55">Category: T-shirts</span>
-            <span className="text-ink/55">Size: All</span>
-          </div>
-          <span className="text-ink/55">Sort: Newest</span>
+      <SectionHeader
+        eyebrow="✦ T-shirts"
+        title="Saudade 0024 — Night Access"
+        copy="The first category opens with heavyweight oversized graphic tees. White / Red leads the launch; darker variants preview the next drop. Shipped worldwide from Switzerland."
+      />
+      <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-y border-[var(--line)] py-5 font-mono text-[10px] uppercase" style={{ letterSpacing: "0.22em" }}>
+        <div className="flex flex-wrap gap-x-6 gap-y-2 text-brick">
+          <span>Drop 0024</span>
+          <span className="text-stone">Category: T-shirts</span>
+          <span className="text-stone">Size: All</span>
         </div>
-        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+        <span className="text-stone">Sort: Newest</span>
+      </div>
+      <div className="mt-10 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+        {products.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
       </div>
     </main>
   );

@@ -23,19 +23,28 @@ export function BuyPanel({ product }: { product: Product }) {
 
   return (
     <>
-      <div className="mt-8">
-        <p className="text-xs font-semibold uppercase tracking-[0.24em] text-red">Size</p>
-        <div className="mt-4 grid grid-cols-3 gap-2 sm:grid-cols-6">
+      <div className="mt-7">
+        <div className="flex justify-between items-center">
+          <span className="font-mono text-[10px] uppercase text-stone" style={{ letterSpacing: "0.2em" }}>
+            Size · {size}
+          </span>
+          <span className="font-mono text-[10px] uppercase text-brick" style={{ letterSpacing: "0.18em" }}>
+            Size guide →
+          </span>
+        </div>
+        <div className="mt-3 flex gap-2 flex-wrap">
           {product.sizes.map((item) => (
             <button
               key={item}
               type="button"
               onClick={() => setSize(item)}
               className={
-                size === item
-                  ? "rounded-full border border-red bg-red px-2 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-paper transition"
-                  : "rounded-full border border-red/20 px-2 py-3 text-xs font-semibold uppercase tracking-[0.18em] transition hover:border-red/45 hover:text-red"
+                "min-w-[52px] h-[52px] inline-flex items-center justify-center border font-mono text-[11px] transition " +
+                (size === item
+                  ? "bg-ink text-paper border-ink"
+                  : "border-[var(--line-2)] hover:border-ink")
               }
+              style={{ letterSpacing: "0.05em" }}
             >
               {item}
             </button>
@@ -48,14 +57,14 @@ export function BuyPanel({ product }: { product: Product }) {
         disabled={!available || adding}
         className={
           available
-            ? "mt-9 w-full rounded-full bg-red px-7 py-5 text-sm font-semibold uppercase tracking-[0.22em] text-paper shadow-red transition hover:bg-signal hover:shadow-signal disabled:cursor-not-allowed disabled:opacity-60"
-            : "mt-9 w-full cursor-not-allowed rounded-full border border-red/30 bg-bone px-7 py-5 text-sm font-semibold uppercase tracking-[0.22em] text-red/70"
+            ? "btn-editorial btn-brick mt-7 w-full justify-center py-[18px] disabled:opacity-60"
+            : "btn-editorial mt-7 w-full justify-center py-[18px] cursor-not-allowed border border-[var(--line-2)] text-stone bg-bone"
         }
       >
-        {available ? (adding ? "Adding..." : "Add to cart") : "Coming soon"}
+        {available ? (adding ? "Adding…" : `Add to bag — €${product.price}.00`) : "Coming soon"}
       </button>
-      <p className="mt-3 text-center text-xs uppercase tracking-[0.18em] text-stone">
-        {available ? "Draft order. Stripe checkout next." : "Drop 0024 release follows the white / red opener."}
+      <p className="mt-3.5 font-mono text-[10px] uppercase text-stone text-center" style={{ letterSpacing: "0.2em" }}>
+        {available ? "Ships from Switzerland · 5–7 days · Free returns" : "Drop 0024 release follows the white / red opener."}
       </p>
     </>
   );

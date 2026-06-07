@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { AppPhone } from "@/components/AppPhone";
 import { BuyPanel } from "@/components/BuyPanel";
 import { JsonLd } from "@/components/JsonLd";
 import { getMarketplaceProductById } from "@/lib/products";
@@ -77,7 +76,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const available = product.status === "available";
 
   return (
-    <main>
+    <main className="max-w-[1480px] mx-auto pt-[clamp(110px,13vh,160px)] px-[clamp(18px,4vw,60px)] pb-20 animate-fadeIn">
       <JsonLd id={`ld-product-${product.id}`} data={productLd(product)} />
       <JsonLd
         id={`ld-product-${product.id}-breadcrumb`}
@@ -88,113 +87,126 @@ export default async function ProductPage({ params }: ProductPageProps) {
         ])}
       />
 
-      <nav aria-label="Breadcrumb" className="mx-auto max-w-[1500px] px-4 pt-6 sm:px-6 lg:px-8">
-        <ol className="flex flex-wrap gap-x-2 font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-stone">
-          <li><Link href="/" className="transition hover:text-red">Home</Link></li>
+      <nav aria-label="Breadcrumb" className="mb-8">
+        <ol className="flex flex-wrap gap-x-2 font-mono text-[10px] uppercase text-stone" style={{ letterSpacing: "0.22em" }}>
+          <li><Link href="/" className="transition hover:text-brick">World Feed</Link></li>
           <li className="text-ink/30">/</li>
-          <li><Link href="/shop" className="transition hover:text-red">Shop</Link></li>
+          <li><Link href="/shop" className="transition hover:text-brick">Shop</Link></li>
           <li className="text-ink/30">/</li>
-          <li className="text-red">{product.colorway}</li>
+          <li className="text-brick">{product.colorway}</li>
         </ol>
       </nav>
 
-      <section className="grid border-b border-red/20 lg:grid-cols-[1.04fr_0.96fr]">
-        <div className="p-4 sm:p-6 lg:p-8">
-          <div className="relative aspect-[4/5] overflow-hidden rounded-[28px] bg-night shadow-red sm:rounded-[34px]">
+      <section className="grid lg:grid-cols-[1.15fr_1fr] gap-[clamp(28px,4vw,72px)] items-start">
+        <div className="flex flex-col gap-2">
+          <div className="relative aspect-[4/5] bg-bone border border-[var(--line)] overflow-hidden">
             <Image
               src={product.cardImage}
               alt={`${product.title} — front view`}
               fill
-              sizes="(min-width: 1024px) 50vw, 100vw"
+              sizes="(min-width: 1024px) 55vw, 100vw"
               className="object-cover"
               priority
             />
             <span
               className={
                 available
-                  ? "absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-paper/90 px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-red"
-                  : "absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-ink/80 px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-red"
+                  ? "absolute left-4 top-4 inline-flex items-center gap-2 px-3 py-1.5 font-mono text-[10px] uppercase text-paper bg-brick"
+                  : "absolute left-4 top-4 inline-flex items-center gap-2 px-3 py-1.5 font-mono text-[10px] uppercase text-paper bg-ink/90"
               }
+              style={{ letterSpacing: "0.22em" }}
             >
-              <span className={available ? "h-1.5 w-1.5 rounded-full bg-signal animate-pulseGlow" : "h-1.5 w-1.5 rounded-full bg-red/70"} />
-              {available ? "Drop 0024 — Live" : "Preview"}
+              <span className={available ? "h-1.5 w-1.5 rounded-full bg-paper live-dot" : "h-1.5 w-1.5 rounded-full bg-paper/70"} />
+              {available ? "Ed. 0024 — Live" : "Preview"}
             </span>
           </div>
+          {product.images.length > 1 ? (
+            <div className="grid grid-cols-4 gap-2">
+              {product.images.slice(0, 4).map((image, i) => (
+                <div key={image.label + i} className="aspect-square bg-bone border border-[var(--line)] overflow-hidden">
+                  <Image
+                    src={image.src}
+                    alt={image.label}
+                    width={200}
+                    height={200}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+              ))}
+            </div>
+          ) : null}
         </div>
 
-        <aside className="px-5 py-10 sm:px-8 sm:py-12 lg:sticky lg:top-20 lg:max-h-[calc(100vh-5rem)] lg:overflow-y-auto lg:px-12 lg:py-14">
-          <p className="font-mono text-xs font-bold uppercase tracking-[0.28em] text-red">{product.collection}</p>
-          <h1 className="soft-title mt-5 font-display text-4xl font-semibold uppercase leading-[0.96] sm:text-5xl lg:text-6xl">
-            {product.title}
-          </h1>
-          <div className="mt-5 flex flex-wrap items-baseline gap-x-4 gap-y-2">
-            <p className="text-2xl font-semibold" itemProp="price">
-              <span className="sr-only">Price:</span>
-              {product.price} EUR
-            </p>
-            <span className="font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-stone">{product.colorway}</span>
+        <aside className="lg:sticky lg:top-24">
+          <div className="eyebrow flex items-center gap-2">
+            <span className="star">✦</span> {product.collection} · 1 of 1 styles
           </div>
-          <p className="mt-4 text-base font-medium text-red">{product.vibe}</p>
-          <p className="mt-6 max-w-xl text-base leading-8 text-ink/65 sm:text-[17px]">{product.description}</p>
-
-          <ul className="mt-6 grid gap-2 font-mono text-[11px] font-bold uppercase tracking-[0.22em] text-ink/55">
-            <li className="flex items-center gap-2">
-              <span className="h-1 w-1 rounded-full bg-red" />
-              Shipped worldwide from Switzerland
-            </li>
-            <li className="flex items-center gap-2">
-              <span className="h-1 w-1 rounded-full bg-red" />
-              Secure Stripe checkout
-            </li>
-            <li className="flex items-center gap-2">
-              <span className="h-1 w-1 rounded-full bg-red" />
-              14-day return on unworn pieces
-            </li>
-          </ul>
+          <h1 className="font-display font-medium mt-2 leading-[1.02]" style={{ fontSize: "clamp(40px, 5vw, 68px)", letterSpacing: "-0.015em" }}>
+            Night Access<br />Tee.
+          </h1>
+          <div className="font-display font-medium mt-3.5" style={{ fontSize: "30px" }}>
+            €{product.price}.00
+          </div>
+          <p className="mt-2 font-mono text-[10px] uppercase text-stone" style={{ letterSpacing: "0.22em" }}>
+            {product.colorway}
+          </p>
+          <p className="mt-5 max-w-[460px] text-ink/75 text-[15px] leading-[1.7]">{product.description}</p>
 
           <BuyPanel product={product} />
+
+          <div className="mt-8 border-t border-[var(--line)]">
+            {[
+              ["Cut", "Boxy / oversized"],
+              ["Fabric", "260 GSM heavy cotton"],
+              ["Print", "Hand screen-print"],
+              ["Back", "Scannable QR + wordmark"],
+              ["Origin", "Made in Switzerland"],
+              ["Run", "Limited · 0024"]
+            ].map(([k, v]) => (
+              <div
+                key={k}
+                className="flex justify-between gap-4 py-3 border-b border-[var(--line)] text-[13px]"
+              >
+                <span className="font-mono text-[9.5px] uppercase text-stone" style={{ letterSpacing: "0.2em" }}>
+                  {k}
+                </span>
+                <span>{v}</span>
+              </div>
+            ))}
+          </div>
         </aside>
       </section>
 
-      <section className="grid border-b border-red/20 lg:grid-cols-2">
-        <div className="p-6 sm:p-10 lg:p-16">
-          <h2 className="font-mono text-xs font-bold uppercase tracking-[0.28em] text-red">Why it hits</h2>
-          <ul className="mt-8 grid gap-3">
-            {product.details.map((detail) => (
-              <li
-                key={detail}
-                className="flex items-start gap-3 rounded-[22px] border border-red/15 bg-bone px-5 py-4 text-ink/75 transition hover:border-red/45"
-              >
-                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-red" />
-                <span className="leading-7">{detail}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="bg-ink p-6 text-paper sm:p-10 lg:p-16">
-          <p className="font-mono text-xs font-bold uppercase tracking-[0.28em] text-red">The QR</p>
-          <h2 className="soft-title mt-6 font-display text-4xl font-semibold uppercase leading-[0.96] sm:text-5xl">
-            It is part of the fit.
-          </h2>
-          <p className="mt-6 max-w-md leading-8 text-paper/65">
-            The code is not a gimmick. It opens a private photo flow tied to the garment. Someone scans, captures the moment, and you keep it.
-          </p>
-          <div className="mt-10">
-            <AppPhone mode="capture" />
-          </div>
+      <section className="mt-[clamp(56px,8vw,120px)]">
+        <div className="grid md:grid-cols-3 border-y border-[var(--line)]">
+          {[
+            ["01", "It remembers", "Every scan adds a memory to the garment's private archive."],
+            ["02", "Heavy cotton", "260 GSM, garment-dyed ecru, built to outlive the trend cycle."],
+            ["03", "One of one", "A single style. Edition 0024. When it's gone, it's gone."]
+          ].map(([n, h, p], i) => (
+            <div
+              key={n}
+              className={
+                "px-7 py-8 " + (i < 2 ? "md:border-r border-[var(--line)]" : "")
+              }
+            >
+              <div className="font-mono text-[9px] uppercase text-brick" style={{ letterSpacing: "0.22em" }}>{n}</div>
+              <h4 className="font-display font-medium mt-2.5" style={{ fontSize: "23px" }}>{h}</h4>
+              <p className="mt-1.5 text-stone text-[13px] leading-[1.6]">{p}</p>
+            </div>
+          ))}
         </div>
       </section>
 
-      <section className="px-4 py-16 text-center sm:px-6 sm:py-20 lg:px-8">
-        <p className="font-mono text-xs font-bold uppercase tracking-[0.28em] text-red">Next step</p>
-        <h2 className="soft-title mx-auto mt-5 max-w-4xl font-display text-4xl font-semibold uppercase leading-[0.96] sm:text-6xl lg:text-7xl">
-          Wear it first. Let the night fill the archive.
+      <section className="mt-[clamp(56px,8vw,120px)] text-center">
+        <div className="eyebrow inline-flex items-center gap-2 justify-center">
+          <span className="star">✦</span> The promise
+        </div>
+        <h2 className="font-display font-medium mt-3.5 leading-[1.05]" style={{ fontSize: "clamp(30px, 4.6vw, 60px)" }}>
+          Picture me for<br /><span className="italic-brick">better memories.</span>
         </h2>
-        <Link
-          href="/app-experience"
-          className="mt-8 inline-flex rounded-full border border-red/25 px-7 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-red transition hover:border-red hover:bg-red hover:text-paper"
-        >
-          See how access works
+        <Link href="/app-experience" className="btn-editorial btn-outline mt-8 inline-flex">
+          See how it works <span className="arr">→</span>
         </Link>
       </section>
     </main>
