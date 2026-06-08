@@ -319,10 +319,9 @@ a {
   font-size: clamp(54px, 12vw, 150px);
   line-height: 0.86;
   letter-spacing: 0.04em;
-  color: var(--paper-3);
+  color: var(--brick);
   text-align: center;
   text-transform: uppercase;
-  -webkit-text-stroke: 1px var(--paper-3);
 }
 
 /* corner-frame retained for app-experience */

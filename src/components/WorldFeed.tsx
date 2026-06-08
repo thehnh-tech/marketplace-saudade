@@ -1,15 +1,27 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+
+type FeedPhotoMetadata = {
+  country?: string | null;
+  region?: string | null;
+  locale?: string | null;
+  city?: string | null;
+  publicFeedSource?: string | null;
+  [key: string]: unknown;
+};
 
 type FeedPhoto = {
   id: number;
+  garmentId?: number;
   imageUrl: string;
   secondaryImageUrl: string | null;
   createdAt: string;
+  captureMode?: string;
   primaryLabel?: string;
   secondaryLabel?: string | null;
+  metadata?: FeedPhotoMetadata | null;
 };
 
 type FeedResponse = {
@@ -19,60 +31,16 @@ type FeedResponse = {
 
 const DIRECT_FEED_URL = "https://back-saudade.thehnh.tech/api/public-feed/photos?limit=24";
 
-const COUNTRIES = [
-  "Portugal", "United States", "France", "South Korea", "Japan", "Germany",
-  "Nigeria", "Mexico", "Brazil", "United Kingdom", "Indonesia", "South Africa",
-  "India", "Colombia", "Greece", "Canada", "Thailand", "Spain", "Italy", "Australia"
-];
-
-const REGIONS = [
-  "after hours", "golden hour", "downtown", "the coast", "up north",
-  "late night", "midday", "out west", "the old town", "the suburbs"
-];
-
-type SealedItem = {
-  kind: "sealed";
-  id: string;
-  place: string;
-  co: string;
-  state: string;
-  num: string;
-  time: string;
-};
-
 type SharedItem = {
-  kind: "shared";
   id: string;
+  photoId: number;
   place: string;
-  co: string;
   rear: string;
   front: string | null;
-  cap: string;
   num: string;
   time: string;
   createdAt: string;
 };
-
-type FeedItem = SealedItem | SharedItem;
-
-function pick<T>(arr: T[]): T {
-  return arr[Math.floor(Math.random() * arr.length)];
-}
-
-let SEAL_SEQ = 873;
-function makeSealed(): SealedItem {
-  const states = ["developing…", "sealing…", "just scanned", "encrypting…"];
-  const n = SEAL_SEQ++;
-  return {
-    kind: "sealed",
-    id: `S-${n}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
-    place: pick(COUNTRIES),
-    co: pick(REGIONS),
-    state: pick(states),
-    num: `№ ${String(900 + (n % 99)).padStart(4, "0")}`,
-    time: "live"
-  };
-}
 
 function formatTime(iso: string): string {
   const date = new Date(iso);
@@ -84,97 +52,44 @@ function formatTime(iso: string): string {
   return new Intl.DateTimeFormat(undefined, { month: "short", day: "2-digit" }).format(date);
 }
 
-function FakeQR({ size = 42, color = "rgba(194,58,43,0.85)", seed = 7 }) {
-  const cells = useMemo(() => {
-    const out: number[][] = [];
-    let s = seed * 1103 + 12345;
-    for (let y = 0; y < 21; y++) {
-      const r: number[] = [];
-      for (let x = 0; x < 21; x++) {
-        s = (s * 9301 + 49297) % 233280;
-        r.push(s / 233280 > 0.46 ? 1 : 0);
+function placeFromPhoto(photo: FeedPhoto): string {
+  const meta = photo.metadata ?? {};
+  const fromCountry = typeof meta.country === "string" ? meta.country.trim() : "";
+  if (fromCountry) return fromCountry;
+  const fromCity = typeof meta.city === "string" ? meta.city.trim() : "";
+  if (fromCity) return fromCity;
+  const fromRegion = typeof meta.region === "string" ? meta.region.trim() : "";
+  if (fromRegion) return fromRegion;
+  const fromLocale = typeof meta.locale === "string" ? meta.locale.trim() : "";
+  if (fromLocale) {
+    try {
+      const region = new Intl.Locale(fromLocale).region;
+      if (region) {
+        const display = new Intl.DisplayNames(["en"], { type: "region" }).of(region);
+        if (display) return display;
       }
-      out.push(r);
+    } catch {
+      /* ignore unparseable locale */
     }
-    const f = (cx: number, cy: number) => {
-      for (let y = 0; y < 7; y++) for (let x = 0; x < 7; x++) {
-        const b = x === 0 || x === 6 || y === 0 || y === 6;
-        const c = x >= 2 && x <= 4 && y >= 2 && y <= 4;
-        out[cy + y][cx + x] = b || c ? 1 : 0;
-      }
-    };
-    f(0, 0); f(14, 0); f(0, 14);
-    return out;
-  }, [seed]);
-  return (
-    <svg width={size} height={size} viewBox="0 0 21 21" shapeRendering="crispEdges" className="block">
-      {cells.map((r, y) =>
-        r.map((v, x) =>
-          v ? <rect key={`${x}-${y}`} x={x} y={y} width="1" height="1" fill={color} /> : null
-        )
-      )}
-    </svg>
-  );
+  }
+  return "Worldwide";
 }
 
-function MemoryCard({ item, index, total, isNew }: { item: FeedItem; index: number; total: number; isNew: boolean }) {
+function toSharedItem(photo: FeedPhoto): SharedItem {
+  return {
+    id: `R-${photo.id}`,
+    photoId: photo.id,
+    place: placeFromPhoto(photo),
+    rear: photo.imageUrl,
+    front: photo.secondaryImageUrl,
+    num: `№ ${String(photo.id).padStart(4, "0")}`,
+    time: formatTime(photo.createdAt),
+    createdAt: photo.createdAt
+  };
+}
+
+function MemoryCard({ item, index, total, isNew }: { item: SharedItem; index: number; total: number; isNew: boolean }) {
   const indexLabel = `${String(index + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
-  if (item.kind === "sealed") {
-    return (
-      <div
-        className={
-          "relative w-full max-w-[440px] aspect-[3/4.1] bg-black overflow-hidden shadow-editorial border border-black/50 " +
-          (isNew ? "animate-drop" : "")
-        }
-      >
-        <div className="sealed-bg" />
-        <div className="sealed-grain" />
-        <div
-          className="scan-line"
-          style={{ animation: "scan 3.4s ease-in-out infinite" }}
-        />
-
-        <div className="absolute top-4 left-4 w-[33%] aspect-[3/4] border-2 border-white/90 rounded-[9px] overflow-hidden shadow-lg z-[3]" style={{ background: "#15110d" }}>
-          <div className="absolute inset-0 flex items-center justify-center">
-            <FakeQR size={42} seed={index + 3} />
-          </div>
-          <div className="absolute bottom-1.5 left-1.5 font-mono text-[7px] uppercase text-white/90" style={{ letterSpacing: "0.14em" }}>
-            front · sealed
-          </div>
-        </div>
-
-        <div className="absolute top-[18px] right-4 left-[calc(33%+28px)] flex flex-col items-end gap-1.5 z-[3] text-right">
-          <span className="inline-flex items-center gap-1.5 px-2 py-1 font-mono text-[8px] uppercase text-white/90 border border-white/30 backdrop-blur-[6px]" style={{ letterSpacing: "0.16em", background: "rgba(255,255,255,0.14)" }}>
-            <span className="w-[5px] h-[5px] rounded-full bg-white live-dot" />
-            Sealed
-          </span>
-          <span className="font-mono text-[8.5px] uppercase text-white/80" style={{ letterSpacing: "0.18em" }}>
-            {indexLabel}
-          </span>
-        </div>
-
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-3.5 text-white/50 z-[2]">
-          <div className="w-[34px] h-[34px] border border-white/40 flex items-center justify-center text-brick">✦</div>
-          <div className="font-display italic text-[21px] text-white/85">{item.state}</div>
-          <div className="font-mono text-[9px] uppercase text-center leading-[1.8]" style={{ letterSpacing: "0.26em" }}>
-            Private to the wearer<br />{item.num}
-          </div>
-        </div>
-
-        <div className="absolute left-0 right-0 bottom-0 p-5 z-[3] text-white">
-          <div className="font-display font-medium text-[28px] leading-none">
-            {item.place}
-            <span className="text-white/60 text-[0.6em] italic ml-2">· {item.co}</span>
-          </div>
-          <div className="mt-3 flex items-center justify-between gap-2 pt-3 border-t border-white/20 font-mono text-[8.5px] uppercase text-white/70" style={{ letterSpacing: "0.14em" }}>
-            <span>captured · not shared</span>
-            <span>private to the wearer</span>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div
       className={
@@ -207,10 +122,6 @@ function MemoryCard({ item, index, total, isNew }: { item: FeedItem; index: numb
       <div className="absolute left-0 right-0 bottom-0 p-5 z-[3] text-white">
         <div className="font-display font-medium text-[28px] leading-none">
           {item.place}
-          <span className="text-white/60 text-[0.6em] italic ml-2">· {item.co}</span>
-        </div>
-        <div className="mt-3 font-display italic text-[17px] leading-[1.35] text-white/95 max-w-[90%]">
-          {item.cap}
         </div>
         <div className="mt-3 flex items-center justify-between gap-2 pt-3 border-t border-white/20 font-mono text-[8.5px] uppercase text-white/70" style={{ letterSpacing: "0.14em" }}>
           <span>{item.num}</span>
@@ -221,28 +132,45 @@ function MemoryCard({ item, index, total, isNew }: { item: FeedItem; index: numb
   );
 }
 
-function Ticker() {
-  const rows = useMemo(() => {
-    const out: { c: string; t: string; shared: boolean }[] = [];
-    for (let i = 0; i < COUNTRIES.length; i++) {
-      const mm = String(Math.floor(Math.random() * 60)).padStart(2, "0");
-      const hh = String(Math.floor(Math.random() * 24)).padStart(2, "0");
-      const shared = i % 6 === 2;
-      out.push({ c: COUNTRIES[i], t: `${hh}:${mm}`, shared });
-    }
-    return out;
-  }, []);
-  const doubled = [...rows, ...rows];
+function EmptyMemoryCard() {
+  return (
+    <div className="relative w-full max-w-[440px] aspect-[3/4.1] bg-bone border border-[var(--line)] overflow-hidden flex flex-col items-center justify-center text-center px-8">
+      <div className="eyebrow flex items-center gap-2">
+        <span className="star">✦</span> Standing by
+      </div>
+      <div className="font-display italic mt-4 text-[28px] leading-[1.15] text-ink">
+        The world is quiet,<br />for now.
+      </div>
+      <p className="mt-4 max-w-[280px] text-ink/65 text-[14px] leading-[1.65]">
+        No photos have been shared with the world feed yet. Scan a sticker, capture a moment, and it lands here in real time.
+      </p>
+    </div>
+  );
+}
+
+function RecentList({ items }: { items: SharedItem[] }) {
+  if (items.length === 0) {
+    return (
+      <div className="border-y border-[var(--line)] py-10 text-center" style={{ height: "min(46vh, 420px)" }}>
+        <div className="eyebrow flex items-center gap-2 justify-center">
+          <span className="star">✦</span> Awaiting first capture
+        </div>
+        <p className="mt-3 max-w-[260px] mx-auto text-stone text-[13px] leading-[1.6]">
+          The world feed lights up as soon as the first sticker is scanned.
+        </p>
+      </div>
+    );
+  }
   return (
     <div className="ticker-mask border-y border-[var(--line)] overflow-hidden relative" style={{ height: "min(46vh, 420px)" }}>
-      <div className="flex flex-col animate-ticker">
-        {doubled.map((r, i) => (
-          <div key={i} className="flex items-baseline justify-between gap-3.5 py-2 border-b border-dotted border-[var(--line-2)]">
+      <div className="flex flex-col">
+        {items.slice(0, 24).map((item) => (
+          <div key={item.id} className="flex items-baseline justify-between gap-3.5 py-2 border-b border-dotted border-[var(--line-2)]">
             <span className="font-display text-[18px] text-ink whitespace-nowrap" style={{ letterSpacing: "0.01em" }}>
-              {r.c}
+              {item.place}
             </span>
-            <span className="font-mono text-[9px] uppercase whitespace-nowrap" style={{ letterSpacing: "0.16em", color: r.shared ? "var(--brick)" : "var(--stone)" }}>
-              {r.shared ? "shared" : "sealed"} · {r.t}
+            <span className="font-mono text-[9px] uppercase whitespace-nowrap text-brick" style={{ letterSpacing: "0.16em" }}>
+              shared · {item.time}
             </span>
           </div>
         ))}
@@ -252,14 +180,11 @@ function Ticker() {
 }
 
 export function WorldFeed() {
-  const [counter, setCounter] = useState(14207);
-  const [items, setItems] = useState<FeedItem[]>(() => {
-    const arr: FeedItem[] = [];
-    for (let i = 0; i < 8; i++) arr.push(makeSealed());
-    return arr;
-  });
+  const [items, setItems] = useState<SharedItem[]>([]);
+  const [hydrated, setHydrated] = useState(false);
   const [newId, setNewId] = useState<string | null>(null);
   const colRef = useRef<HTMLDivElement | null>(null);
+  const knownIdsRef = useRef<Set<number>>(new Set());
 
   // lock body scroll on the immersive feed
   useEffect(() => {
@@ -270,12 +195,6 @@ export function WorldFeed() {
       document.body.style.overflow = prev;
       delete document.body.dataset.feedPage;
     };
-  }, []);
-
-  // counter
-  useEffect(() => {
-    const id = setInterval(() => setCounter((v) => v + 1 + Math.floor(Math.random() * 3)), 2400);
-    return () => clearInterval(id);
   }, []);
 
   // load real shared captures from backend
@@ -295,61 +214,36 @@ export function WorldFeed() {
             const r = await fetch(DIRECT_FEED_URL, { cache: "no-store" });
             if (r.ok) body = await r.json();
           } catch {
-            body = null;
+            /* ignore */
           }
         }
-        if (!mounted || !body?.photos?.length) return;
-        const shared: SharedItem[] = body.photos.map((p, i) => ({
-          kind: "shared",
-          id: `R-${p.id}`,
-          place: pick(COUNTRIES),
-          co: pick(REGIONS),
-          rear: p.imageUrl,
-          front: p.secondaryImageUrl,
-          cap: `“Captured live. № ${String(p.id).padStart(4, "0")}.”`,
-          num: `№ ${String(p.id).padStart(4, "0")}`,
-          time: formatTime(p.createdAt),
-          createdAt: p.createdAt
-        }));
-        setItems((prev) => {
-          const seals = prev.filter((x) => x.kind === "sealed");
-          const merged: FeedItem[] = [];
-          shared.forEach((s, i) => {
-            merged.push(s);
-            if (seals[i]) merged.push(seals[i]);
-            if (seals[i + shared.length]) merged.push(seals[i + shared.length]);
-          });
-          while (merged.length < 12) merged.push(makeSealed());
-          return merged.slice(0, 26);
-        });
+        if (!mounted) return;
+        const photos = body?.photos ?? [];
+        const next = photos.map(toSharedItem);
+
+        // detect newly arrived top photo for the drop-in animation
+        const previousKnown = knownIdsRef.current;
+        const fresh = next.find((s) => !previousKnown.has(s.photoId));
+        knownIdsRef.current = new Set(next.map((s) => s.photoId));
+        setItems(next);
+        if (fresh && previousKnown.size > 0) {
+          setNewId(fresh.id);
+          window.setTimeout(() => setNewId((current) => (current === fresh.id ? null : current)), 1200);
+        }
+        setHydrated(true);
       } catch {
-        /* ignore */
+        if (mounted) setHydrated(true);
       }
     }
     void load();
-    const timer = setInterval(load, 60_000);
+    const timer = setInterval(load, 30_000);
     return () => {
       mounted = false;
       clearInterval(timer);
     };
   }, []);
 
-  // live drop-in of sealed items
-  useEffect(() => {
-    let tid: ReturnType<typeof setTimeout>;
-    const tick = () => {
-      const col = colRef.current;
-      const nearTop = !col || col.scrollTop < 80;
-      if (nearTop) {
-        const next = makeSealed();
-        setItems((arr) => [next, ...arr].slice(0, 26));
-        setNewId(next.id);
-      }
-      tid = setTimeout(tick, 5600 + Math.random() * 3400);
-    };
-    tid = setTimeout(tick, 4600);
-    return () => clearTimeout(tid);
-  }, []);
+  const totalCount = items.length;
 
   return (
     <div className="relative min-h-screen bg-paper">
@@ -370,7 +264,7 @@ export function WorldFeed() {
               <span className="w-8 h-px bg-[var(--line-2)] relative overflow-hidden">
                 <span className="absolute inset-0 w-[40%] bg-brick animate-scanLine" />
               </span>
-              Scroll the stream
+              {totalCount > 0 ? "Scroll the stream" : "Stream standing by"}
             </div>
           </div>
         </aside>
@@ -380,34 +274,43 @@ export function WorldFeed() {
           ref={colRef}
           className="relative overflow-y-auto feed-col-snap no-scrollbar md:border-x md:border-[var(--line)] bg-gradient-to-b from-[var(--paper-2)] to-paper md:h-screen h-[calc(100svh-56px-env(safe-area-inset-bottom))]"
         >
-          {items.map((item, i) => (
-            <section
-              key={item.id}
-              className="feed-snap-item md:min-h-screen min-h-[calc(100svh-56px-env(safe-area-inset-bottom))] flex items-center justify-center px-3 md:px-5 py-10 md:py-20"
-            >
-              <MemoryCard item={item} index={i} total={items.length} isNew={item.id === newId} />
+          {hydrated && items.length === 0 ? (
+            <section className="feed-snap-item md:min-h-screen min-h-[calc(100svh-56px-env(safe-area-inset-bottom))] flex items-center justify-center px-3 md:px-5 py-10 md:py-20">
+              <EmptyMemoryCard />
             </section>
-          ))}
+          ) : (
+            items.map((item, i) => (
+              <section
+                key={item.id}
+                className="feed-snap-item md:min-h-screen min-h-[calc(100svh-56px-env(safe-area-inset-bottom))] flex items-center justify-center px-3 md:px-5 py-10 md:py-20"
+              >
+                <MemoryCard item={item} index={i} total={items.length} isNew={item.id === newId} />
+              </section>
+            ))
+          )}
         </main>
 
         {/* RIGHT RAIL */}
         <aside className="hidden md:flex md:flex-col md:justify-between sticky top-0 h-screen px-[clamp(20px,2.4vw,46px)] py-24 pointer-events-none">
           <div className="pointer-events-auto">
             <div className="font-mono text-[9px] uppercase text-stone" style={{ letterSpacing: "0.24em" }}>
-              Memories sealed today
+              Shared with the world
             </div>
             <div className="font-display font-medium mt-1 flex items-baseline gap-2 text-ink" style={{ fontSize: "clamp(34px, 3.4vw, 52px)", letterSpacing: "-0.01em", fontVariantNumeric: "tabular-nums" }}>
               <span className="live-dot self-center" />
-              {counter.toLocaleString()}
+              {String(totalCount).padStart(2, "0")}
             </div>
+            <p className="mt-2 text-stone text-[12px] leading-[1.55] max-w-[260px]">
+              Every photo the wearers chose to release into the world.
+            </p>
           </div>
 
           <div className="pointer-events-auto w-full">
             <div className="flex justify-between font-mono text-[9px] uppercase text-stone mb-2.5" style={{ letterSpacing: "0.22em" }}>
-              <span>Incoming</span>
+              <span>Recent</span>
               <span>worldwide</span>
             </div>
-            <Ticker />
+            <RecentList items={items} />
           </div>
 
           <div className="pointer-events-auto w-full">

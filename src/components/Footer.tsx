@@ -68,7 +68,7 @@ export function Footer() {
         <div className="mt-4 pt-4 border-t border-[var(--line)] flex flex-wrap justify-between gap-4 font-mono text-[9px] uppercase text-stone" style={{ letterSpacing: "0.2em" }}>
           <span>© 2026 Saudade</span>
           <span>Picture me for better memories</span>
-          <span>Made in Portugal · Ed. 0024</span>
+          <span>Made by THE HNH · Ed. 0024</span>
         </div>
 
         <div className="mt-4 flex flex-wrap justify-center gap-4 font-mono text-[9px] uppercase text-stone" style={{ letterSpacing: "0.2em" }}>
