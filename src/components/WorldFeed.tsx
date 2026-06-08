@@ -5,10 +5,11 @@ import { useEffect, useRef, useState } from "react";
 
 type FeedPhotoMetadata = {
   country?: string | null;
+  countryCode?: string | null;
   region?: string | null;
   locale?: string | null;
   city?: string | null;
-  publicFeedSource?: string | null;
+  captureMode?: string | null;
   [key: string]: unknown;
 };
 
@@ -21,6 +22,10 @@ type FeedPhoto = {
   captureMode?: string;
   primaryLabel?: string;
   secondaryLabel?: string | null;
+  country?: string | null;
+  countryCode?: string | null;
+  city?: string | null;
+  region?: string | null;
   metadata?: FeedPhotoMetadata | null;
 };
 
@@ -54,12 +59,20 @@ function formatTime(iso: string): string {
 
 function placeFromPhoto(photo: FeedPhoto): string {
   const meta = photo.metadata ?? {};
-  const fromCountry = typeof meta.country === "string" ? meta.country.trim() : "";
-  if (fromCountry) return fromCountry;
-  const fromCity = typeof meta.city === "string" ? meta.city.trim() : "";
-  if (fromCity) return fromCity;
-  const fromRegion = typeof meta.region === "string" ? meta.region.trim() : "";
-  if (fromRegion) return fromRegion;
+  const candidates = [
+    photo.country,
+    photo.city,
+    photo.region,
+    meta.country,
+    meta.city,
+    meta.region
+  ];
+  for (const candidate of candidates) {
+    if (typeof candidate === "string") {
+      const trimmed = candidate.trim();
+      if (trimmed) return trimmed;
+    }
+  }
   const fromLocale = typeof meta.locale === "string" ? meta.locale.trim() : "";
   if (fromLocale) {
     try {
