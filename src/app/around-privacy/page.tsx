@@ -25,14 +25,17 @@ export default function AroundPrivacyPage() {
             "Account data: an anonymous identifier from Sign in with Apple, your chosen pseudo, and — if Apple shares it — a verified email address used only to link sign-in methods to the same account and to answer support requests. Your email is never shown to other users.",
             "Device data: an installation identifier, a push notification token, platform and app version — used to deliver notifications and to sign you out of lost devices.",
             "Photos: the front/back photos you capture inside an around, with technical metadata (file size, format, capture time).",
-            "Location data: GPS fixes, only in the situations described in section 2. We never collect your contacts, your photo library, or advertising identifiers, and we do not track you across other apps or websites."
+            "Location data: GPS fixes, only in the situations described in section 2.",
+            "Connection data: like any online service, our server receives the IP address your device uses for each request, and uses it for abuse prevention and rate limiting. When you open or join an around, that IP address — and the approximate country, region, city and timezone we derive from it — is additionally stored in the join audit record as an anti-spoofing signal (section 2). This derived area is coarse, city-level at best: it is never used to locate you, never shown to other members, and never combined with your GPS fixes for any other purpose.",
+            "We never collect your contacts, your photo library, or advertising identifiers, and we do not track you across other apps or websites."
           ]
         },
         {
           heading: "2. Location: consent, verification at join, Radar",
           body: [
-            "Your location is processed only with your consent, expressed through the iOS location permission prompts, and only for two purposes.",
+            "Your location is processed only with your consent, expressed through the iOS location permission prompts, and only for the purposes below.",
             "Joining an around: when you tap Join, the app takes two fresh GPS fixes and sends them to our server, which verifies that you are physically inside the around's radius. These fixes are kept as a join audit record for the around's lifetime (to detect location spoofing) and deleted with it.",
+            "Anti-spoofing check: at that same moment, we compare your GPS fixes with the approximate area derived from your IP address. A gross mismatch blocks the join; a moderate one only flags the membership internally for moderation. Your IP address and this approximate area are stored alongside the GPS fixes in the same join audit record, are used for no other purpose, and are deleted with it. The same IP address is recorded when you open an around of your own.",
             "Radar (optional): if you enable the Radar toggle, the app periodically shares your approximate position in the background so we can notify you when an around opens nearby. Radar is strictly opt-in, is explained before the system permission is requested, and can be revoked at any time from Settings — the app is fully functional without it.",
             "We never build a location history. The Radar position is a single record per account that is overwritten by each update and automatically deleted after at most one hour without a refresh. Past positions are not retained, and push notifications never contain coordinates."
           ]
@@ -49,7 +52,7 @@ export default function AroundPrivacyPage() {
           heading: "4. Retention: 7 days",
           body: [
             "Photos live in the around's circle for 7 days after the capture window closes. After that, they are automatically deleted from our servers and from our image host (Cloudinary), including the blurred previews and cached copies (CDN invalidation is requested at deletion).",
-            "Join audit records, memberships, and reports tied to an around are deleted with it. Account data is kept while your account exists, and deleted when you delete your account (section 7)."
+            "Join audit records — the GPS fixes, the IP address, and the approximate area derived from it — as well as memberships and reports tied to an around, are deleted with it. Account data is kept while your account exists, and deleted when you delete your account (section 7)."
           ]
         },
         {
@@ -70,7 +73,7 @@ export default function AroundPrivacyPage() {
           heading: "7. Your rights & deleting your account",
           body: [
             "Under the Swiss Federal Act on Data Protection (nLPD) and the GDPR, you can request access to, rectification of, deletion of, or a portable copy of your data at any time by writing to the contact address below.",
-            "You can also delete your account directly in the app (Settings → Delete my account). Deletion cascades immediately: your photos are removed from our servers and from Cloudinary, your device records and Radar position are erased, and your memberships are anonymised. Arounds you created are closed.",
+            "You can also delete your account directly in the app (Settings → Delete my account). Deletion cascades immediately: your photos are removed from our servers and from Cloudinary, your device records and Radar position are erased, and your memberships are anonymised — the GPS fixes, the IP address and the derived approximate area are erased from every membership record. Arounds you created are closed.",
             "If a request is not handled to your satisfaction, you can contact the Swiss Federal Data Protection and Information Commissioner (FDPIC) or your local data protection authority."
           ]
         },

@@ -51,7 +51,7 @@ export default function AroundTermsPage() {
         {
           heading: "5. Acceptable use",
           body: [
-            "You must not upload content that is illegal, pornographic, hateful, violent, harassing, or that violates someone's privacy or intellectual property. You must not impersonate others, spoof your GPS position, attempt to access photos you are not entitled to see, or interfere with the service.",
+            "You must not publish content that is illegal, pornographic, hateful, violent, harassing, or that violates someone's privacy or intellectual property. This applies to every piece of text you choose as well as to your photos — in particular the name you give to an around and your pseudo, both of which are shown to people who have not joined your around, including in the notification announcing that it opened. You must not impersonate others, spoof your GPS position, attempt to access photos you are not entitled to see, or interfere with the service.",
             "Arounds are private circles, not a broadcasting tool. We reserve the right to remove content, close arounds, and suspend or ban accounts that breach these Terms."
           ]
         },
@@ -59,7 +59,8 @@ export default function AroundTermsPage() {
           heading: "6. Moderation, reporting, blocking",
           body: [
             "Every photo can be reported from the app, and every user can be reported or blocked. Blocking is mutual: a blocked user no longer sees your content and you no longer see theirs.",
-            "The owner of an around can reject photos and remove members from their circle. Reported content is reviewed and, where justified, removed within 24 hours. Objectionable content and abusive users may be removed or banned without prior notice."
+            "The owner of an around can reject photos and remove members from their circle. Reported content is reviewed and, where justified, removed within 24 hours. Objectionable content and abusive users may be removed or banned without prior notice.",
+            "The name of an around is user content in the same sense as a photo: it is subject to section 5, it is filtered when the around is created, and it can be reported by anyone who sees it — including someone who has only received the notification announcing the around and has not joined it. A name that breaches these Terms is removed together with the around it names, and its author may be banned."
           ]
         },
         {
