@@ -22,7 +22,7 @@ export default function AroundPrivacyPage() {
         {
           heading: "1. Data we collect",
           body: [
-            "Account data: an anonymous identifier from Apple or Google Sign-In, your chosen pseudo, and — if the provider shares it — a verified email address used only to link sign-in methods to the same account and to answer support requests. Your email is never shown to other users.",
+            "Account data: an anonymous identifier from Sign in with Apple, your chosen pseudo, and — if Apple shares it — a verified email address used only to link sign-in methods to the same account and to answer support requests. Your email is never shown to other users.",
             "Device data: an installation identifier, a push notification token, platform and app version — used to deliver notifications and to sign you out of lost devices.",
             "Photos: the front/back photos you capture inside an around, with technical metadata (file size, format, capture time).",
             "Location data: GPS fixes, only in the situations described in section 2. We never collect your contacts, your photo library, or advertising identifiers, and we do not track you across other apps or websites."
