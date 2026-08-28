@@ -14,6 +14,11 @@ export default function AroundPrivacyPage() {
   return (
     <LegalLayout
       pathname="/around-privacy"
+      navLinks={[
+        { href: "/around-terms", label: "Terms" },
+        { href: "/around-privacy", label: "Privacy" }
+      ]}
+      contact={{ label: "Questions, reports, data requests", address: "around@welock.in" }}
       eyebrow="Legal"
       title="Picture me around — Privacy Policy"
       intro="Picture me around is a proximity photo app: someone opens an 'around' at a party, people physically nearby join it, capture photos during the open window, and the circle keeps them for 7 days. This page explains exactly what data the app processes, why, for how long, and the rights you have over it."
@@ -87,7 +92,7 @@ export default function AroundPrivacyPage() {
         {
           heading: "9. Contact",
           body: [
-            "For any privacy question, data request, or takedown request concerning Picture me around, write to hello@saudade.thehnh.tech. Takedown requests for photos of identifiable people are treated as a priority and handled within 24 hours."
+            "For any privacy question, data request, or takedown request concerning Picture me around, write to around@welock.in. Takedown requests for photos of identifiable people are treated as a priority and handled within 24 hours."
           ]
         }
       ]}

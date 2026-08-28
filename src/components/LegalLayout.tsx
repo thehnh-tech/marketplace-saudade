@@ -14,15 +14,37 @@ type LegalLayoutProps = {
   updated: string;
   sections: LegalSection[];
   pathname: string;
+  /**
+   * Sibling pages shown in the top nav. Defaults to the storefront's legal
+   * pages; the Picture me around pages pass their own pair so they never
+   * send a reader to the t-shirt terms.
+   */
+  navLinks?: { href: string; label: string }[];
+  /** Footer contact line. Defaults to the storefront's. */
+  contact?: { label: string; address: string };
 };
 
-const links = [
+const storefrontLinks = [
   { href: "/terms", label: "Terms" },
   { href: "/privacy", label: "Privacy" },
   { href: "/purchase", label: "Purchase" }
 ];
 
-export function LegalLayout({ eyebrow, title, intro, updated, sections, pathname }: LegalLayoutProps) {
+const storefrontContact = {
+  label: "Questions, returns, custom orders",
+  address: "hello@saudade.thehnh.tech"
+};
+
+export function LegalLayout({
+  eyebrow,
+  title,
+  intro,
+  updated,
+  sections,
+  pathname,
+  navLinks = storefrontLinks,
+  contact = storefrontContact
+}: LegalLayoutProps) {
   return (
     <main className="max-w-[1480px] mx-auto pt-[clamp(110px,13vh,160px)] px-[clamp(18px,4vw,60px)] pb-20 animate-fadeIn">
       <JsonLd
@@ -43,7 +65,7 @@ export function LegalLayout({ eyebrow, title, intro, updated, sections, pathname
         <p className="mt-4 font-mono text-[10px] uppercase text-stone" style={{ letterSpacing: "0.22em" }}>Updated {updated}</p>
 
         <nav className="mt-8 flex flex-wrap gap-3">
-          {links.map((link) => (
+          {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
@@ -73,7 +95,7 @@ export function LegalLayout({ eyebrow, title, intro, updated, sections, pathname
         <div className="mt-12 border-t border-[var(--line)] pt-7 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="font-mono text-[10px] uppercase text-brick" style={{ letterSpacing: "0.22em" }}>Contact</p>
-            <p className="mt-1.5 text-ink/75 text-[14.5px]">Questions, returns, custom orders: hello@saudade.thehnh.tech</p>
+            <p className="mt-1.5 text-ink/75 text-[14.5px]">{contact.label}: {contact.address}</p>
           </div>
           <p className="font-mono text-[10px] uppercase text-stone" style={{ letterSpacing: "0.22em" }}>
             Built by <Link href="https://thehnh.tech" className="text-brick hover:text-ink transition">thehnh.tech</Link>

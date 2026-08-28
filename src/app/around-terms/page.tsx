@@ -14,6 +14,11 @@ export default function AroundTermsPage() {
   return (
     <LegalLayout
       pathname="/around-terms"
+      navLinks={[
+        { href: "/around-terms", label: "Terms" },
+        { href: "/around-privacy", label: "Privacy" }
+      ]}
+      contact={{ label: "Questions, reports, data requests", address: "around@welock.in" }}
       eyebrow="Legal"
       title="Picture me around — Terms of Use"
       intro="These Terms govern your use of the Picture me around mobile app. You accept them when you create an account — acceptance is recorded, and you cannot use the app without it. They apply alongside the Picture me around Privacy Policy."
@@ -23,7 +28,7 @@ export default function AroundTermsPage() {
           heading: "1. Operator",
           body: [
             "Picture me around is operated by thehnh.tech. All references to we, us, or the app refer to thehnh.tech and the Picture me around service.",
-            "Contact: hello@saudade.thehnh.tech."
+            "Contact: around@welock.in."
           ]
         },
         {
