@@ -22,7 +22,7 @@ export default function AroundTermsPage() {
       eyebrow="Legal"
       title="Picture me around — Terms of Use"
       intro="These Terms govern your use of the Picture me around mobile app. You accept them when you create an account — acceptance is recorded, and you cannot use the app without it. They apply alongside the Picture me around Privacy Policy."
-      updated="August 2026"
+      updated="September 2026"
       sections={[
         {
           heading: "1. Operator",
@@ -34,14 +34,15 @@ export default function AroundTermsPage() {
         {
           heading: "2. Eligibility",
           body: [
-            "The app is rated 17+ and is intended for nightlife contexts. You must be at least 17 years old, or older where your local law requires it, to create an account.",
+            "The app is rated 17+ and is intended for nightlife contexts. You must be at least 17 years old, or older where your local law requires it, to create an account. We do not ask for or verify your date of birth: creating an account is your declaration that you meet this condition, and we may terminate an account we believe does not.",
             "One account per person. You are responsible for what happens under your account."
           ]
         },
         {
           heading: "3. The service",
           body: [
-            "An around is a temporary photo circle opened at a physical place: it has a radius (up to 300 m) and an open window (1 to 6 hours). Joining requires being physically inside the radius — your position is verified server-side at the moment you join.",
+            "An around is a temporary photo circle opened at a physical place: it has a radius (up to 300 m) and an open window (1 to 6 hours). Joining requires being physically inside the radius — your position is verified on our server at the moment you join.",
+            "Opening an around stores the position you are standing at, exactly, as that around's centre, for as long as the around exists. Members see distances, never the centre; it is erased when the around is purged.",
             "During the window, members capture photos in-app. Photos remain blurred for other members until the around's owner approves them one by one. Photos are automatically deleted from the circle 7 days after the window closes.",
             "We may adjust radii, windows, quotas, and rate limits to keep the service safe and available."
           ]
@@ -78,15 +79,15 @@ export default function AroundTermsPage() {
         {
           heading: "8. Location",
           body: [
-            "Joining an around requires location access at the moment of the join; the optional Radar feature uses background location only if you enable it, and can be disabled at any time. Both are described in the Privacy Policy.",
+            "Background location — the Radar — is required to use the app. It is what lets us tell you that an around has opened around you, which is the whole point of the product, and until you allow it the app shows an explanatory screen and nothing else. You can switch it off at any time in Settings; doing so returns you to that screen rather than to a reduced version of the app. Joining an around additionally takes two GPS readings at that moment. All of it is described in the Privacy Policy.",
             "Attempting to forge your position (fake GPS, VPN relocation, replayed fixes) is a breach of these Terms and may lead to a ban."
           ]
         },
         {
           heading: "9. Account deletion and termination",
           body: [
-            "You can delete your account at any time from the app (Settings → Delete my account). Deletion removes your photos, devices, and Radar position, anonymises your memberships, and closes the arounds you created.",
-            "We may suspend or terminate accounts that breach these Terms. Bans take effect immediately across all sessions."
+            "You can delete your account at any time from the app (Settings → Delete my account). Deletion removes your photos, devices, Radar position and notification trail, deletes your blocks and the reports you filed, anonymises your memberships, and closes the arounds you opened — erasing their name and centre. Your public name is then reserved for 30 days so nobody can take it and be mistaken for you. The full list is in the Privacy Policy.",
+            "We may suspend or terminate accounts that breach these Terms. A ban takes effect across all sessions within about a minute."
           ]
         },
         {
