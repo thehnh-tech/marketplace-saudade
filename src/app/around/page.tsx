@@ -108,7 +108,9 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
   const t = copy[lang];
   const url = lang === "en" ? `${SITE}/?lang=en` : SITE;
   return {
-    metadataBase: new URL(SITE),
+    // These canonical, alternate and social URLs are already absolute. Next 15
+    // drops root-path query strings when resolving them against metadataBase.
+    metadataBase: null,
     title: { absolute: t.title }, description: t.description,
     applicationName: "Picture me around", publisher: "thehnh.tech", category: "Photo & Video", classification: "Photography and social sharing",
     keywords: ["Picture me around", "photos de soirée", "party photos", "photo circle", "around", "Radar"],
