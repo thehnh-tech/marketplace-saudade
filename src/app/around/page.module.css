@@ -30,9 +30,6 @@
 .nav { display: flex; gap: 32px; font-size: 12px; color: #c4c1cf; }
 .nav a { min-height: 44px; display: inline-flex; align-items: center; gap: 5px; }
 .nav a:hover, .footer a:hover { color: var(--cyan); }
-.languages { display: flex; align-items: center; gap: 10px; color: #73727d; font-size: 10px; letter-spacing: .07em; }
-.languages a { display: grid; min-width: 28px; min-height: 44px; place-items: center; }
-.languages a[aria-current="page"] { color: var(--white); }
 .hero { min-height: 610px; display: grid; grid-template-columns: 1.2fr 1fr; align-items: center; padding: 52px 0 56px; position: relative; }
 .heroCopy { position: relative; z-index: 1; }
 .eyebrow { font-family: var(--font-mono), monospace; font-size: 10px; font-weight: 400; letter-spacing: .14em; text-transform: uppercase; color: var(--cyan); line-height: 1.7; }
@@ -181,7 +178,6 @@
   .container { width: calc(100% - 32px); }
   .hero h1 { font-size: 46px; }
   .brand { font-size: 16px; }
-  .languages { gap: 6px; }
   .stats dd { font-size: 25px; }
 }
 @media (prefers-reduced-motion: reduce) {

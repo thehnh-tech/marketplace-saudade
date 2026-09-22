@@ -16,7 +16,7 @@ export function middleware(request: NextRequest) {
 
   if (request.nextUrl.pathname === "/sitemap.xml") {
     return new NextResponse(
-      '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml"><url><loc>https://around.thehnh.tech/</loc><xhtml:link rel="alternate" hreflang="fr" href="https://around.thehnh.tech/"/><xhtml:link rel="alternate" hreflang="en" href="https://around.thehnh.tech/?lang=en"/></url><url><loc>https://around.thehnh.tech/?lang=en</loc><xhtml:link rel="alternate" hreflang="fr" href="https://around.thehnh.tech/"/><xhtml:link rel="alternate" hreflang="en" href="https://around.thehnh.tech/?lang=en"/></url></urlset>',
+      '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://around.thehnh.tech/</loc></url></urlset>',
       { headers: { "Content-Type": "application/xml; charset=utf-8", "Cache-Control": "public, max-age=3600" } }
     );
   }
