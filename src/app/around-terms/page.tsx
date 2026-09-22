@@ -22,7 +22,7 @@ export default function AroundTermsPage() {
       eyebrow="Legal"
       title="Picture me around — Terms of Use"
       intro="These Terms govern your use of the Picture me around mobile app. You accept them when you create an account — acceptance is recorded, and you cannot use the app without it. They apply alongside the Picture me around Privacy Policy."
-      updated="September 2026"
+      updated="22 September 2026"
       sections={[
         {
           heading: "1. Operator",
@@ -34,7 +34,7 @@ export default function AroundTermsPage() {
         {
           heading: "2. Eligibility",
           body: [
-            "The app is rated 17+ and is intended for nightlife contexts. You must be at least 17 years old, or older where your local law requires it, to create an account. We do not ask for or verify your date of birth: creating an account is your declaration that you meet this condition, and we may terminate an account we believe does not.",
+            "You must be at least 16 years old in Switzerland, or at least 18 years old in any other supported European country, to create an account. If a higher minimum age applies under local law, you must meet that requirement. We do not ask for or verify your date of birth: creating an account is your declaration that you meet the applicable age condition, and we may terminate an account we believe does not.",
             "One account per person. You are responsible for what happens under your account."
           ]
         },
