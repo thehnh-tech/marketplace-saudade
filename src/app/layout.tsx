@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Space_Mono } from "next/font/google";
 import "./globals.css";
 import { Footer } from "@/components/Footer";
-import { JsonLd } from "@/components/JsonLd";
 import { Navbar } from "@/components/Navbar";
 import {
   DEFAULT_OG_IMAGE,
@@ -13,9 +12,7 @@ import {
   SITE_NAME,
   SITE_TAGLINE,
   SITE_URL,
-  TWITTER_HANDLE,
-  organizationLd,
-  websiteLd
+  TWITTER_HANDLE
 } from "@/lib/seo";
 
 const serif = Cormorant_Garamond({
@@ -130,8 +127,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link rel="dns-prefetch" href="//fonts.googleapis.com" />
-        <JsonLd id="ld-organization" data={organizationLd()} />
-        <JsonLd id="ld-website" data={websiteLd()} />
       </head>
       <body>
         <a

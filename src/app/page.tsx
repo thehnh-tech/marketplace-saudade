@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/components/JsonLd";
 import { WorldFeed } from "@/components/WorldFeed";
 import { getMarketplaceProducts } from "@/lib/products";
-import { breadcrumbLd, itemListLd, SITE_NAME, SITE_TAGLINE, SITE_URL } from "@/lib/seo";
+import { breadcrumbLd, itemListLd, organizationLd, websiteLd, SITE_NAME, SITE_TAGLINE, SITE_URL } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: `Picture me by SAUDADE — ${SITE_NAME} 0024 Night Access`,
@@ -29,6 +29,8 @@ export default async function HomePage() {
 
   return (
     <main className="overflow-x-hidden">
+      <JsonLd id="ld-organization" data={organizationLd()} />
+      <JsonLd id="ld-website" data={websiteLd()} />
       <JsonLd id="ld-home-itemlist" data={itemListLd(products)} />
       <JsonLd id="ld-home-breadcrumb" data={breadcrumbLd([{ name: "Home", url: "/" }])} />
       <WorldFeed />
